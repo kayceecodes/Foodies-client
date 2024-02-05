@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function details() {
+export default function page() {
   return (
     <div>
-        Details
+      
     </div>
   );
 }
