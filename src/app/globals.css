@@ -25,3 +25,75 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f2f5; /* Light gray background color */
+}
+
+.background {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  /* background: radial-gradient(circle at top left, #f0f2f5, #e3e6f0 50%, #ffffff); */
+  overflow: hidden;
+}
+
+/* Blurred circles */
+.background::before,
+.background::after,
+.background .circle1,
+.background .circle2,
+.background .circle3 {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+/* Main circles with higher saturation */
+.background::before {
+  width: 220px;
+  height: 220px;
+  top: 20%;
+  left: 15%;
+  background-color: rgba(255, 192, 203, 0.7); /* Pinkish color */
+}
+
+.background::after {
+  width: 180px;
+  height: 180px;
+  bottom: 25%;
+  right: 15%;
+  background-color: rgba(173, 216, 230, 0.7); /* Light blue color */
+}
+
+/* Additional circles */
+.background .circle1 {
+  width: 150px;
+  height: 150px;
+  top: 30%;
+  left: 50%;
+  background-color: rgba(255, 228, 181, 0.8); /* Light orange */
+}
+
+.background .circle2 {
+  width: 100px;
+  height: 100px;
+  top: 60%;
+  left: 25%;
+  background-color: rgba(144, 238, 144, 0.7); /* Light green */
+}
+
+.background .circle3 {
+  width: 120px;
+  height: 120px;
+  bottom: 10%;
+  right: 40%;
+  background-color: rgba(221, 160, 221, 0.7); /* Light purple */
+}
