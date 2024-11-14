@@ -33,67 +33,71 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0f2f5; /* Light gray background color */
+  background: #f0f2f5; 
 }
 
 .background {
   position: relative;
   width: 100vw;
   height: 100vh;
-  /* background: radial-gradient(circle at top left, #f0f2f5, #e3e6f0 50%, #ffffff); */
+  background: radial-gradient(circle at top left, #f0f2f5, #e3e6f0 50%, #ffffff);
   overflow: hidden;
 }
 
-/* Blurred circles */
+/* Base styling for all pseudo-elements to create the circles */
 .background::before,
 .background::after,
-.background .circle1,
-.background .circle2,
-.background .circle3 {
-  content: '';
+.background::first-letter,
+.background::first-line,
+.background::marker {
+  content: "";
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
+  opacity: 0.8;
 }
 
-/* Main circles with higher saturation */
+/* Circle 1 */
 .background::before {
   width: 220px;
   height: 220px;
+  background-color: rgba(255, 192, 203, 0.7); /* Pinkish color */
   top: 20%;
   left: 15%;
-  background-color: rgba(255, 192, 203, 0.7); /* Pinkish color */
 }
 
+/* Circle 2 */
 .background::after {
   width: 180px;
   height: 180px;
+  background-color: rgba(173, 216, 230, 0.7); /* Light blue color */
   bottom: 25%;
   right: 15%;
-  background-color: rgba(173, 216, 230, 0.7); /* Light blue color */
 }
 
-/* Additional circles */
-.background .circle1 {
+/* Circle 3 */
+.background::first-letter {
   width: 150px;
   height: 150px;
+  background-color: rgba(255, 228, 181, 0.8); /* Light orange */
   top: 30%;
   left: 50%;
-  background-color: rgba(255, 228, 181, 0.8); /* Light orange */
 }
 
-.background .circle2 {
+/* Circle 4 */
+.background::first-line {
   width: 100px;
   height: 100px;
+  background-color: rgba(144, 238, 144, 0.99); /* Light green */
   top: 60%;
   left: 25%;
-  background-color: rgba(144, 238, 144, 0.7); /* Light green */
 }
 
-.background .circle3 {
+/* Circle 5 */
+.background::marker {
   width: 120px;
   height: 120px;
+  background-color: rgba(221, 160, 221, 0.7); /* Light purple */
   bottom: 10%;
   right: 40%;
-  background-color: rgba(221, 160, 221, 0.7); /* Light purple */
 }

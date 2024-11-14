@@ -3,8 +3,25 @@
 import { addOne } from '@/redux/slices/counterSlice';
 import store from '@/redux/store';
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
+import React, { ErrorInfo, useEffect, useState } from 'react';
 import Map, { Marker } from 'react-map-gl';
+
+interface Business {
+  alias: string,
+  categories: Array<string>,
+  city: string,
+  id: string,
+  latitude: number,
+  longitude: number,
+  name: string,
+  price: "$" | "$$" | "$$$",
+  rating: number,
+  reviewCount: number,
+  state: string,
+  streetAddress: string,
+  url: string,
+  zipCode: string
+}
 
 // export async function getServerSideProps() {
 //   const res = await fetch('https://localhost:');
@@ -27,39 +44,56 @@ import Map, { Marker } from 'react-map-gl';
 // }
 
 export default function MapPage() {
-  const [data, setData] = useState();
+  const [businesses, setBusinesses] = useState<Array<Business>>([]);
 
   useEffect(() => {
-    fetch('http://localhost:5155/api/businesses/location/NewYork')
-    .then(response => response.json())
-    .then(data => setData(data))
-    .then(data => console.log("Data: ", data))
-    .catch(error => console.error('Error fetching data:', error));
+    const fetchBusinessesByLocation = async () => {
+      try {
+        const searchTerm = `San Francisco, CA`;
+        const response = await fetch(`http://localhost:5155/api/businesses/location/${encodeURIComponent(searchTerm)}`);
+        
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setBusinesses(data);
+        console.log("Data: ", data);
+
+      } catch (error: unknown) {
+        console.log("Error: ", error);
+      }
+    };
+
+    fetchBusinessesByLocation();
   }, []);
   
   return (
-          <div>
+          <div className=''>
             <Head>
               <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css' rel='stylesheet' />
               {/* Add additional global head tags here */}
             </Head>
-            {/* <Map
+            <Map
               mapboxAccessToken={process.env.NEXT_PUBLIC_MapboxAccessTokenDev}
               initialViewState={{
-                longitude: -122.4,
-                latitude: 37.8,
-                zoom: 14
+                longitude: -122.4194,
+                latitude: 37.7749,
+                zoom: 10
               }}
               style={{width: "100%", height: "70vh"}}
               mapStyle="mapbox://styles/mapbox/streets-v9"
-              > */}
-                {/* {data != null ? data.map(() => 
-
-                ) : null} */}
-                {/* <Marker longitude={-100} latitude={40} anchor="bottom" >
-                  <img src="./images/black_map_marker.png" />
-                </Marker>   */}
-              {/* </Map> */}
+              >
+                {/* {businesses != null ? businesses.map(b => 
+                  {
+                  <Marker 
+                    longitude={b.longitude} 
+                    latitude={b.latitude} 
+                    anchor="bottom" >
+                      <img src="./images/black_map_marker.png" />
+                  </Marker>
+                  }) : null} */}
+              </Map>
           </div>
   );
 }
