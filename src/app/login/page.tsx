@@ -5,8 +5,7 @@ import store from '@/redux/store';
 export default function page() {
   return (
     <div className=''>
-      <div className=''>
-      </div>
+      
     </div>
   );
 }
