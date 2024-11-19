@@ -1,11 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
-import store from '@/redux/store';
+import LoginForm from './form';
 
-export default function page() {
+
+export default function LoginPage() {
+  
   return (
-    <div className=''>
-      
-    </div>
+    <>
+      <Head>
+        <title>Login | Foodies</title>
+      </Head>
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="p-8 rounded-lg border-stone-500 border-2 w-96">
+          <h1 className="text-2xl font-bold mb-6 text-center">Login to Foodies</h1>
+          <LoginForm />
+        </div>
+      </main>
+    </>
   );
 }
