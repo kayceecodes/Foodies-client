@@ -1,71 +1,46 @@
 'use client'
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
 
-interface LoginState {
-    username: string;
-    password: string;
-  }
+import React from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+
 
 export default function LoginForm() {
-    const [loginData, setLoginData] = useState<LoginState>({
-        username: '',
-        password: '',
-      });
-      const router = useRouter();
-    
-      const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setLoginData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      };
-    
-      const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // TODO: Implement login logic here
-        console.log('Login data:', loginData);
-        // If login is successful, redirect to home page
-        // router.push('/');
-      };
-
     return (
-    <form onSubmit={handleSubmit}>
-    <div className="mb-4">
-      <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-700">
-        Username
-      </label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        value={loginData.username}
-        onChange={handleInputChange}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        required
-      />
-    </div>
-    <div className="mb-6">
-      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">
-        Password
-      </label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        value={loginData.password}
-        onChange={handleInputChange}
-        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-        required
-      />
-    </div>
-    <button
-      type="submit"
-      className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-    >
-      Log In
-    </button>
-  </form>
-  );
-}
+        <div className='h-80 p-8 rounded-lg border-stone-500 border-2 w-96 container'>
+            <h1>Any place in your app!</h1>
+            <Formik
+                initialValues={{ email: '', password: '' }}
+                validate={values => {
+                const errors = {
+                    email: ""
+                };
+                if (!values.email) {
+                    errors.email = 'Required';
+                } else if (
+                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                ) {
+                    errors.email = 'Invalid email address';
+                }
+                return errors;
+                }}
+                onSubmit={(values, { setSubmitting }) => {
+                setTimeout(() => {
+                    alert(JSON.stringify(values, null, 2));
+                    setSubmitting(false);
+                }, 400);
+                }}
+            >
+                {({ isSubmitting }) => (
+                <Form className="flex justify-center flex-col">
+                    <Field type="email" name="email" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <ErrorMessage className="text-red-600 mb-2" name="email" component="div" />
+                    <Field type="password" name="password" className="w-full mb-2 px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <ErrorMessage name="password" component="div" className="text-red-600 mb-2" />
+                    <button type="submit" disabled={isSubmitting}>
+                        Submit
+                    </button>
+                </Form>
+                )}
+            </Formik>
+        </div>
+)};
