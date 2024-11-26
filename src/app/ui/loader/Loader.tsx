@@ -1,27 +1,18 @@
 import { useState, CSSProperties } from "react";
-import ClipLoader from "react-spinners/ClipLoader";
+import { PropagateLoader } from "react-spinners";
 
-const override: CSSProperties = {
-  display: "block",
-  margin: "0 auto",
-  borderColor: "red",
-};
 
 export default function Loader() {
   let [loading, setLoading] = useState(true);
-  let [color, setColor] = useState("#ffffff");
 
   return (
-    <div className="sweet-loading">
-      <button onClick={() => setLoading(!loading)}>Toggle Loader</button>
-      <input value={color} onChange={(input) => setColor(input.target.value)} placeholder="Color of the loader" />
-
-      <ClipLoader
-        color={color}
+    <div className="">
+      <PropagateLoader
         loading={loading}
-        cssOverride={override}
-        size={150}
-        aria-label="Loading Spinner"
+        size={6}
+        speedMultiplier={1.7}
+        color="#7e9ab35e"
+        aria-label="Pulse Loader"
         data-testid="loader"
       />
     </div>

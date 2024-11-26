@@ -4,7 +4,7 @@
     width: 100vw;
     height: 100vh;
     /* background-color: #e6e9f2; */
-    background: radial-gradient(circle at top left, #f0f2f5, #e3e6f0 50%, #ffffff);
+    background: radial-gradient(circle at top left, #f0f2f5, #e3e6f0 50%, #7e9ab35e);
     overflow: hidden;
   }
     
