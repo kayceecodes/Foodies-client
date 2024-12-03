@@ -70,10 +70,6 @@ export default function MapPage() {
   
   return (
           <div className=''>
-            <Head>
-              <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css' rel='stylesheet' />
-              {/* Add additional global head tags here */}
-            </Head>
             <Map
               mapboxAccessToken={process.env.NEXT_PUBLIC_MapboxAccessTokenDev}
               initialViewState={{

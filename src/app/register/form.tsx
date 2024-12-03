@@ -57,19 +57,6 @@ export default function RegisterForm() {
             console.log("Error: ", error)
         }
     }
-    const passwordSchema = Yup.string()
-        .matches(/^[A-Z]/, 'Password must start with an uppercase letter')
-        .matches(/(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])/, 'Password must contain at least one special character')
-        .matches(/(?=(.*\d){2,})/, 'Password must contain at least two digits')
-        .min(8, 'Password must be at least 8 characters long')
-        .required('Password is required');
-    
-    const validationSchema = Yup.object({
-        username: Yup.string().required('Username is required'),
-        email: Yup.string().email('Invalid email').required('Email is required'),
-        password: passwordSchema,
-        address: ValidationSchema.address
-    });
 
     const initialValues: UserData = {
         username: 'jdoe',
@@ -85,10 +72,10 @@ export default function RegisterForm() {
             <Loader /> 
               :
             <div className='p-8 rounded-lg border-stone-500 border-2 w-96 container'>
-                <h1 className="text-2xl font-bold mb-6 text-center">Register to Foodies</h1>
+                <h1 className="text-2xl font-bold mb-6 text-center">Sign up with Foodies</h1>
                 <Formik
                     initialValues={initialValues}
-                    validateSchema={validationSchema}
+                    validateSchema={ValidationSchema}
                     onSubmit={async (values, { setSubmitting }) => {
                         // await Register(values);
                         await RegisterRoute(values);
@@ -102,31 +89,37 @@ export default function RegisterForm() {
                 >
                 {({ isSubmitting, errors }) => (
                     <Form className="flex justify-center flex-col">
-                        <div className='mb-6'>
+                        <div className='mb-3'>
+                            <label htmlFor="username">Username</label>
                             <Field type="username" name="username" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage className="text-red-600 text-sm absolute" name="username" component="div" />
                         </div>
-                        <div className='mb-6'>
+                        <div className='mb-3'>
+                            <label htmlFor="email">Email</label>
                             <Field type="email" name="email" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage className="text-red-600 text-sm absolute" name="email" component="div" />
                         </div>
-                        <div className='mb-6'>
+                        <div className='mb-3'>
+                            <label htmlFor="password">Password</label>
                             <Field type="password" name="password" className="mb-4 w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage name="password" component="div" className="text-red-800" />
                         </div>
-                        <div className='mb-6'>
+                        <div className='mb-3'>
+                            <label htmlFor="streetAddress">Street Address</label>
                             <Field type="text" name="streetAddress" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage className="text-red-600 text-sm absolute" name="streetAddress" component="div" />
                         </div>
-                        <div className='mb-6'>
+                        <div className='mb-3'>
+                            <label htmlFor="state">State</label>
                             <Field type="text" name="state" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage className="text-red-600 text-sm absolute" name="state" component="div" />
                         </div>
-                        <div className='mb-6'>
+                        <div className='mb-3'>
+                            <label htmlFor="zipcode">Zipcode</label>
                             <Field type="dropdown" name="zipcode" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage className="text-red-600 text-sm absolute" name="zipcode" component="div" />
                         </div>
-                        <button type="submit" className="border-stone-600 rounded border-2 py-2" disabled={isSubmitting}>
+                        <button type="submit" className="border-stone-600 rounded border-2 py-2 my-4" disabled={isSubmitting}>
                             Submit
                         </button>
                     </Form>
