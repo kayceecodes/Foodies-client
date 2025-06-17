@@ -66,7 +66,7 @@ export default function LoginForm() {
             <div className='h-80 p-8 rounded-lg border-stone-500 border-2 w-96 container'>
                 <h1 className="text-2xl font-bold mb-6 text-center">Login to Foodies</h1>
                 <Formik
-                    initialValues={{ email: 'jaydee@gmail.com', password: 'somepw' }}
+                    initialValues={{ email: 'jillrue@gmail.com', password: 'somepw' }}
                     validateSchema={schema}
                     onSubmit={async (values, { setSubmitting }) => {
                         // await Login(values);
