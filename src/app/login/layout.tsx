@@ -1,5 +1,5 @@
 import React from "react";
-import CirlclesBackground from "../ui/CirclesBackground";
+import CirlclesBackground from "../components/ui/CirclesBackground";
 
 export default function layout({ children }: { children: React.ReactNode }) {
   return (

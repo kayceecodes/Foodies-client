@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LoginForm from './form';
-import Loader from '../ui/loader/Loader';
+import Loader from '../components/ui/loader/Loader';
 import { boolean } from 'yup';
 
 
