@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
-import Loader from '../ui/loader/Loader';
+import Loader from '../components/ui/loader/Loader';
 import ValidationSchema from './validationSchema';
 
 interface RegisterResponse {
