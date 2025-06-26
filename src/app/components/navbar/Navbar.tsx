@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation"
 
 export default function Navbar () {
     const pathname = usePathname();
-    let loggedIn = 
+//    let loggedIn = 
     return (
         <div className="flex w-100 justify-between">
             <div className="flex-1">
