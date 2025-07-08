@@ -34,11 +34,11 @@ export default function LoginForm() {
         try {
                 
             const response = await fetch("http://localhost:5156/api/auth/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginCredentials)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(loginCredentials)
             })
 
             if(!response.ok)
