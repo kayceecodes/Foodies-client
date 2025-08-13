@@ -11,16 +11,35 @@ interface LoginResponse {
     refreshToken?: string
     expiresIn: number
 }
-interface LoginCredentials {
+
+interface LoginRequest {
     email: string
     password: string
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role?: string;
+  createdAt: string;
+}
+
+export interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  login: (email: string, password: string) => Promise<LoginResponse>;
+  logout: () => Promise<void>;
+  checkAuthStatus: () => Promise<void>;
+  isAuthenticated: boolean;
 }
 
 export default function LoginForm() {
     const [isLoading, setLoading] = useState<boolean>();
     const router = useRouter();
-    
-    const LoginRoute = async ({email, password}: LoginCredentials) => {
+    const [loginRequest, setLoginRequest] = useState<LoginRequest>();
+
+    const LoginRoute = async ({email, password}: LoginRequest) => {
         const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
@@ -30,7 +49,7 @@ export default function LoginForm() {
           });
     }
 
-    const Login = async (loginCredentials: LoginCredentials) => {    
+    const Login = async (loginRequest: LoginRequest) => {    
         try {
                 
             const response = await fetch("http://localhost:5156/api/auth/login", {
@@ -38,11 +57,14 @@ export default function LoginForm() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(loginCredentials)
+                body: JSON.stringify(loginRequest)
             })
 
-            if(!response.ok)
-            throw new Error('Failed to log in');
+            if(!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                    console.log("Error data: ", errorData);
+                    throw new Error('Failed to log in');
+            }
 
             const data: LoginResponse = await response.json();
 
@@ -57,8 +79,6 @@ export default function LoginForm() {
         password: Yup.string().required('Password is required'),
     });
 
-
-
     return (      
             isLoading ? 
             <Loader /> 
@@ -66,11 +86,11 @@ export default function LoginForm() {
             <div className='h-80 p-8 rounded-lg border-stone-500 border-2 w-96 container'>
                 <h1 className="text-2xl font-bold mb-6 text-center">Login to Foodies</h1>
                 <Formik
-                    initialValues={{ email: 'jillrue@gmail.com', password: 'somepw' }}
+                    initialValues={{ email: 'jillrue@gmail.com', password: 'somepw' }}// loginCredentials would be used here
                     validateSchema={schema}
                     onSubmit={async (values, { setSubmitting }) => {
-                        // await Login(values);
-                        await LoginRoute(values);
+                        await Login(values);
+                        //await LoginRoute(values);
                         setLoading(true);
                         setSubmitting(true);
                         setTimeout(async () => {
