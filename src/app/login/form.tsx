@@ -5,51 +5,26 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import Loader from '../components/ui/loader/Loader';
+import { AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
+import { ApiResult } from '../../../types/api';
 
-interface LoginResponse {
-    token: string
-    refreshToken?: string
-    expiresIn: number
+class AuthError extends Error {
+    readonly statusCode: number;
+
+    constructor(message: string, statusCode: number) {
+        super(message);
+        this.name = "AuthError";
+        this.statusCode = statusCode;
+    }
 }
 
-interface LoginRequest {
-    email: string
-    password: string
-}
-
-export interface User {
-  id: string;
-  email: string;
-  name: string;
-  role?: string;
-  createdAt: string;
-}
-
-export interface AuthContextType {
-  user: User | null;
-  loading: boolean;
-  login: (email: string, password: string) => Promise<LoginResponse>;
-  logout: () => Promise<void>;
-  checkAuthStatus: () => Promise<void>;
-  isAuthenticated: boolean;
-}
 
 export default function LoginForm() {
     const [isLoading, setLoading] = useState<boolean>();
     const router = useRouter();
     const [loginRequest, setLoginRequest] = useState<LoginRequest>();
 
-    const LoginRoute = async ({email, password}: LoginRequest) => {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-          });
-    }
-
-    const Login = async (loginRequest: LoginRequest) => {    
+    const Login = async (loginRequest: LoginRequest): Promise<AuthSuccessResponse> => {    
         try {
                 
             const response = await fetch("http://localhost:5156/api/auth/login", {
@@ -57,23 +32,26 @@ export default function LoginForm() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
+                credentials: 'include',
                 body: JSON.stringify(loginRequest)
             })
 
+            const apiResult: ApiResult<LoginResponse> = await response.json().catch(() => {});
+
             if(!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                    console.log("Error data: ", errorData);
-                    throw new Error('Failed to log in');
+                    throw new AuthError(apiResult.message || 'Failed to log in', response.status);
             }
 
-            const data: LoginResponse = await response.json();
+         return { success: true, message: apiResult.message || 'Login Successful' };
+        } catch (error) {
 
-            return data;
+            if (error instanceof AuthError) {
+                throw error;
+            }
+
+            throw new AuthError('Network Error', 500);
         }
-          catch(error) {
-            console.log("Error: ", error)
-        }
-    }
+}
     const schema = Yup.object({
         email: Yup.string().email('Invalid email').required('Email is required'),
         password: Yup.string().required('Password is required'),

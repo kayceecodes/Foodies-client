@@ -5,6 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import Loader from '../components/ui/loader/Loader';
 import ValidationSchema from './validationSchema';
+import { AuthSuccessResponse, RegisterRequest } from '../../../types/auth';
+import { ApiResult } from '../../../types/api';
 
 interface RegisterResponse {
     token: string
@@ -45,6 +47,43 @@ export default function RegisterForm() {
             body: JSON.stringify(user),
           });
     }
+    class AuthError extends Error {
+        readonly statusCode: number;  
+        constructor(message: string, statusCode: number) {
+            super(message);
+            this.name = "AuthError";
+            this.statusCode = statusCode;
+        }
+    }      
+        
+    const register = async (userData: RegisterRequest): Promise<AuthSuccessResponse> => {
+        try {
+        const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify(userData),
+        });
+
+        const apiResult: ApiResult<null> = await response.json().catch(() => ({}));
+        
+        if (!response.ok || !apiResult.isSuccess) {
+        throw new AuthError(
+            apiResult.message || 'Registration failed',
+            response.status
+        );
+        }
+
+        return { success: true, message: apiResult.message || 'Registration successful' };
+    } catch (error) {
+        if (error instanceof AuthError) {
+            throw error;
+        }
+            throw new AuthError('Network error during registration', 500);
+    }
+}
 
     return (      
             isLoading ? 
