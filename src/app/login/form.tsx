@@ -5,19 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import Loader from '../components/ui/loader/Loader';
-import { AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
+import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
-
-class AuthError extends Error {
-    readonly statusCode: number;
-
-    constructor(message: string, statusCode: number) {
-        super(message);
-        this.name = "AuthError";
-        this.statusCode = statusCode;
-    }
-}
-
 
 export default function LoginForm() {
     const [isLoading, setLoading] = useState<boolean>();
