@@ -1,12 +1,13 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useRouter } from 'next/navigation';
 import Loader from '../components/ui/loader/Loader';
 import ValidationSchema from './validationSchema';
 import { AuthSuccessResponse, RegisterRequest } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
+import { register } from '../../../utils/auth';
 
 interface RegisterResponse {
     token: string
@@ -26,65 +27,45 @@ interface UserData {
 
 export default function RegisterForm() {
     const [isLoading, setLoading] = useState<boolean>();
+    const [error, setError] = useState<string>();
     const router = useRouter();
-    const initialValues: UserData = {
+    const initialValues: RegisterRequest = {
         firstName: 'John',
         lastName: 'Doe',
         username: 'jdoe',
         email: 'jdoe@gmail.com',
         password: 'somepw',
         streetAddress: '123 E Union St.',
+        city: 'Seattle',
         state: 'WA',
         zipcode: '98039'
     }
 
-    const RegisterRoute = async (user: UserData) => {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-          });
-    }
-    class AuthError extends Error {
-        readonly statusCode: number;  
-        constructor(message: string, statusCode: number) {
-            super(message);
-            this.name = "AuthError";
-            this.statusCode = statusCode;
-        }
-    }      
-        
-    const register = async (userData: RegisterRequest): Promise<AuthSuccessResponse> => {
+    const handleSubmit = async (values: RegisterRequest, formikHelpers: FormikHelpers<RegisterRequest>) => {
+        const { setSubmitting } = formikHelpers;
+        setLoading(true);
+        setError('');
+        setSubmitting(true);
+
         try {
-        const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(userData),
-        });
-
-        const apiResult: ApiResult<null> = await response.json().catch(() => ({}));
-        
-        if (!response.ok || !apiResult.isSuccess) {
-        throw new AuthError(
-            apiResult.message || 'Registration failed',
-            response.status
-        );
+            const response = await register(values);
+            if (response.success) {
+                //onSuccess?.();
+                router.push('/');
+                setTimeout(async () => {
+                    // alert(JSON.stringify(values, null, 2));
+                    router.push('/');
+                } , 500);
+            }
+        } catch(error: unknown) {
+            if (error instanceof Error)
+            setError(error.message || 'Registration failed!');
+        } finally {
+            setLoading(true);
+            setSubmitting(false);
         }
-
-        return { success: true, message: apiResult.message || 'Registration successful' };
-    } catch (error) {
-        if (error instanceof AuthError) {
-            throw error;
-        }
-            throw new AuthError('Network error during registration', 500);
     }
-}
-
+    
     return (      
             isLoading ? 
             <Loader /> 
@@ -94,16 +75,7 @@ export default function RegisterForm() {
                 <Formik
                     initialValues={initialValues}
                     validateSchema={ValidationSchema}
-                    onSubmit={async (values, { setSubmitting }) => {
-                        // await Register(values);
-                        await RegisterRoute(values);
-                        setLoading(true);
-                        setSubmitting(true);
-                        setTimeout(async () => {
-                            // alert(JSON.stringify(values, null, 2));
-                            router.push('/');
-                        } , 800);
-                    }}
+                    onSubmit={handleSubmit}
                 >
                 {({ isSubmitting, errors }) => (
                     <Form className="flex justify-center flex-col">

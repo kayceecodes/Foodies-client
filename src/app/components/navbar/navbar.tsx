@@ -1,22 +1,8 @@
 'use client'
 import Link from "next/link";
 import { usePathname } from "next/navigation"
+import { logout } from "../../../../utils/auth";
 
-export const logout = async () => {
-    const response = await fetch(API_BASE_URL + '/api/logout', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        credentials: 'include',
-        },
-    });
-
-    if (!response.ok) {
-        throw new Error('Failed to log out');
-    }
-
-    return response.json();
-}
 
 export default function Navbar () {
     const pathname = usePathname();

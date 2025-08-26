@@ -8,3 +8,4 @@
     if(!respone.Data || counter)
     ^^ This checks if the response if falsey(null or undefined) or if counter is falsey(0)
 6. You can create extended Error classes and check if they are instances of the newly created Error class.
+7. APIs can return any response object so when it comes to errors in catch block it will allow any catch type but you may manually throw an error after checking for a response.ok(which is a boolean derived from if the code is 200-299 or not) and then your 'catch' will catch an error of Type Error since it was thrown.

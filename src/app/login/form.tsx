@@ -1,46 +1,45 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import Loader from '../components/ui/loader/Loader';
-import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
+import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, RegisterRequest } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
+import { login } from '../../../utils/auth';
 
 export default function LoginForm() {
     const [isLoading, setLoading] = useState<boolean>();
+    const [error, setError] = useState<string>();
     const router = useRouter();
     const [loginRequest, setLoginRequest] = useState<LoginRequest>();
 
-    const Login = async (loginRequest: LoginRequest): Promise<AuthSuccessResponse> => {    
+    const handleSubmit = async (values: LoginRequest, formikHelpers: FormikHelpers<RegisterRequest>) => {
+        const { setSubmitting } = formikHelpers;
+        setLoading(true);
+        setError('');
+        setSubmitting(true);
+
         try {
-                
-            const response = await fetch("http://localhost:5156/api/auth/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify(loginRequest)
-            })
-
-            const apiResult: ApiResult<LoginResponse> = await response.json().catch(() => {});
-
-            if(!response.ok) {
-                    throw new AuthError(apiResult.message || 'Failed to log in', response.status);
+            const response = await login(values);
+            if (response.success) {
+                //onSuccess?.();
+                router.push('/');
+                setTimeout(async () => {
+                    // alert(JSON.stringify(values, null, 2));
+                    router.push('/');
+                } , 500);
             }
-
-         return { success: true, message: apiResult.message || 'Login Successful' };
-        } catch (error) {
-
-            if (error instanceof AuthError) {
-                throw error;
-            }
-
-            throw new AuthError('Network Error', 500);
+        } catch(error: unknown) {
+            if (error instanceof Error)
+            setError(error.message || 'Registration failed!');
+        } finally {
+            setLoading(true);
+            setSubmitting(false);
         }
-}
+    }
+ 
     const schema = Yup.object({
         email: Yup.string().email('Invalid email').required('Email is required'),
         password: Yup.string().required('Password is required'),
@@ -56,14 +55,10 @@ export default function LoginForm() {
                     initialValues={{ email: 'jillrue@gmail.com', password: 'somepw' }}// loginCredentials would be used here
                     validateSchema={schema}
                     onSubmit={async (values, { setSubmitting }) => {
-                        await Login(values);
+                        await login(values);
                         //await LoginRoute(values);
                         setLoading(true);
                         setSubmitting(true);
-                        setTimeout(async () => {
-                            // alert(JSON.stringify(values, null, 2));
-                            router.push('/');
-                        } , 800);
                     }}
                 >
                 {({ isSubmitting, errors }) => (

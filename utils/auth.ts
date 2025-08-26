@@ -1,5 +1,78 @@
 import { ApiResult } from "../types/api";
-import { AuthError, User } from "../types/auth"
+import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, RegisterRequest, User } from "../types/auth"
+
+export async function login(loginRequest: LoginRequest) {    
+   try {
+      const response = await fetch("http://localhost:5156/api/auth/login", {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(loginRequest)
+      })
+
+      const apiResult: ApiResult<LoginResponse> = await response.json().catch(() => {});
+
+      if(!response.ok) {
+               throw new AuthError(apiResult.message || 'Failed to log in', response.status);
+      }
+
+   return { success: true, message: apiResult.message || 'Login Successful' };
+   } catch (error) {
+
+      if (error instanceof AuthError) {
+            throw error;
+      }
+
+      throw new AuthError('Network Error', 500);
+   }
+}
+
+export const register = async (userData: RegisterRequest): Promise<AuthSuccessResponse> => {
+   try {
+        const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+      },
+        credentials: 'include',
+        body: JSON.stringify(userData),
+      });
+
+        const apiResult: ApiResult<null> = await response.json().catch(() => ({}));
+        
+        if (!response.ok || !apiResult.isSuccess) {
+        throw new AuthError(
+            apiResult.message || 'Registration failed',
+            response.status
+        );
+        }
+
+        return { success: true, message: apiResult.message || 'Registration successful' };
+    } catch (error) {
+        if (error instanceof AuthError) {
+            throw error;
+        }
+            throw new AuthError('Network error during registration', 500);
+    }
+}
+
+export const logout = async () => {
+    const response = await fetch(API_BASE_URL + '/api/logout', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        credentials: 'include',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to log out');
+    }
+
+    return response.json();
+}
 
 export async function getCurrentUser():Promise<User | null> {
    try {
@@ -37,7 +110,7 @@ export async function checkAuth() {
       })
 
       return response.ok;
-   } catch(error) {
+   } catch {
       return false;
    }
 }
