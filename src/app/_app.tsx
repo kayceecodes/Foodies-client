@@ -5,11 +5,9 @@ import { AuthProvider } from '../../hooks/useAuth';
 
 export default function App({ Component, pageProps }: AppProps) {
     return(
-        <CustomProvider store={store}>
-            <AuthProvider>
+            <>
                 <Component {...pageProps} />
-            </AuthProvider>
-        </CustomProvider> 
+            </>
     );
     
 };

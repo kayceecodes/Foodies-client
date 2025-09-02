@@ -10,10 +10,14 @@ export default function Navbar () {
     const pathname = usePathname();
 
     const loginLink =
-        isLoggedIn || pathname === 'login' ? 
+        isLoggedIn || pathname === '/login' ? 
         null :
         <Link className="flex-0 mr-5" href="/login">Login</Link>;
 
+    const registerLink =
+        pathname === '/register' ? 
+        null :
+        <Link className="flex-0 mr-5" href="/register">Sign up</Link>;
     const accountLink = 
         isLoggedIn ?  
         <Link className="flex-0 mr-5" href="/dashboard">Account</Link>
@@ -35,7 +39,7 @@ export default function Navbar () {
                 </Link>
                 {loginLink}
                 {accountLink}
-                <Link className="flex-0 mr-5" href="/register">Sign up</Link>
+                {registerLink}
                 {logoutLink}
             </nav> 
         </div>

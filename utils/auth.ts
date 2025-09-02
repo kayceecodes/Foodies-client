@@ -3,7 +3,7 @@ import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, RegisterRe
 
 export async function login(loginRequest: LoginRequest) {    
    try {
-      const response = await fetch("http://localhost:5156/api/auth/login", {
+      const response = await fetch("http://localhost:8082/api/auth/login", {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'

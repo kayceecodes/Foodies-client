@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import CirlclesBackground from './components/ui/CirclesBackground'
 import Navbar from './components/navbar/navbar'
+import { AuthProvider } from '../../hooks/useAuth'
+import CustomProvider from '@/redux/CustomProvider'
+import store from '@/redux/store'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,10 +18,14 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
         <body className={`${inter.className}`}>
-         <Navbar /> 
-          {/* <CirlclesBackground> */}
-            {children}
-          {/* </CirlclesBackground> */}
+            <CustomProvider store={store}>
+              <AuthProvider>
+                <Navbar /> 
+                  {/* <CirlclesBackground> */}
+                    {children}
+                  {/* </CirlclesBackground> */}
+              </AuthProvider>
+            </CustomProvider>
         </body>
     </html>
   )
