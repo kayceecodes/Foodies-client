@@ -1,13 +1,25 @@
 'use client'
+
 import Link from "next/link";
 import { usePathname } from "next/navigation"
-import { logout } from "../../../../utils/auth";
-import { useState } from "react";
+import { checkAuthentication, logout } from "../../../../utils/auth";
+import { useState, useEffect } from "react";
+import { useAuth } from "../../../../hooks/useAuth";
 
 
 export default function Navbar () {
-    const [isLoggedIn, setIsLoggedIn] = useState();
     const pathname = usePathname();
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    let isAuth = false;
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            isAuth = await checkAuthentication();
+            setIsLoggedIn(isAuth);
+        }
+        checkAuth();
+    }
+        ,[isAuth]);
 
     const loginLink =
         isLoggedIn || pathname === '/login' ? 
@@ -25,7 +37,7 @@ export default function Navbar () {
         
     const logoutLink = 
         isLoggedIn ? 
-        <Link className="flex-0 mr-5" onClick={() => logout()} href="/logout">Log out</Link>
+        <Link className="flex-0 mr-5" onClick={() => logout()} href="/">Log out</Link>
         : null;
 
     return (
@@ -35,8 +47,12 @@ export default function Navbar () {
             </div>
             <nav className="flex flex-1 justify-end pr-5">
                 <Link className="flex-0 mr-5" href="/map">
-                    <i className="">Search</i>
+                    <i className="fa-solid fa-house"></i>
                 </Link>
+                <Link className="flex-0 mr-5" href="/map">
+                    <i className="fa-solid fa-magnifying-glass"></i>Search
+                </Link>
+                
                 {loginLink}
                 {accountLink}
                 {registerLink}

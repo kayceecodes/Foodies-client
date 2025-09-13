@@ -50,7 +50,7 @@ export default function MapPage() {
     const fetchBusinessesByLocation = async () => {
       try {
         const searchTerm = `San Francisco, CA`;
-        const response = await fetch(`http://localhost:5155/api/businesses/location/${encodeURIComponent(searchTerm)}`);
+        const response = await fetch(`/api/businesses/location/${encodeURIComponent(searchTerm)}`);
         
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);

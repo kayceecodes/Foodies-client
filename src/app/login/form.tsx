@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useRouter } from 'next/navigation';
 import * as Yup from 'yup';
 import Loader from '../components/ui/loader/Loader';
-import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, RegisterRequest } from '../../../types/auth';
+import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
 import { login } from '../../../utils/auth';
 
@@ -15,7 +15,7 @@ export default function LoginForm() {
     const router = useRouter();
     const [loginRequest, setLoginRequest] = useState<LoginRequest>();
 
-    const handleSubmit = async (values: LoginRequest, formikHelpers: FormikHelpers<RegisterRequest>) => {
+    const handleSubmit = async (values: LoginRequest, formikHelpers: FormikHelpers<LoginRequest>) => {
         const { setSubmitting } = formikHelpers;
         setLoading(true);
         setError('');
@@ -25,17 +25,17 @@ export default function LoginForm() {
             const response = await login(values);
             if (response.success) {
                 //onSuccess?.();
-                router.push('/');
                 setTimeout(async () => {
-                    // alert(JSON.stringify(values, null, 2));
+                   // alert(JSON.stringify(values, null, 2));
                     router.push('/');
                 } , 500);
             }
         } catch(error: unknown) {
             if (error instanceof Error)
-            setError(error.message || 'Registration failed!');
+            setError(error.message || 'Login failed!');
+            setSubmitting(false);
         } finally {
-            setLoading(true);
+            setLoading(false);
             setSubmitting(false);
         }
     }
@@ -52,14 +52,9 @@ export default function LoginForm() {
             <div className='h-80 p-8 rounded-lg border-stone-500 border-2 w-96 container'>
                 <h1 className="text-2xl font-bold mb-6 text-center">Login to Foodies</h1>
                 <Formik
-                    initialValues={{ email: 'jillrue@gmail.com', password: 'somepw' }}// loginCredentials would be used here
+                    initialValues={{ email: 'tHiddle@gmail.com', password: 'somepw' }}// loginCredentials would be used here
                     validateSchema={schema}
-                    onSubmit={async (values, { setSubmitting }) => {
-                        await login(values);
-                        //await LoginRoute(values);
-                        setLoading(true);
-                        setSubmitting(true);
-                    }}
+                    onSubmit={handleSubmit}
                 >
                 {({ isSubmitting, errors }) => (
                     <Form className="flex justify-center flex-col">

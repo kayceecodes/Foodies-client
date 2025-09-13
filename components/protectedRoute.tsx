@@ -1,3 +1,4 @@
+'use client'
 import { ReactNode } from "react";
 import { useAuth } from "../hooks/useAuth"
 interface ProtectedRouteProps {
@@ -12,16 +13,16 @@ export function ProtectedRoute({
     requiredRole,
 }: ProtectedRouteProps): JSX.Element {
 
-    const {loading, user} = useAuth();
+//    const {loading, user} = useAuth();
 
-    if (loading)
-        return <div>Loading...</div>;
+    //if (loading)
+        //return <div>Loading...</div>;
 
-    if (!user)
-       return <>{fallback}</>; 
+    //if (!user)
+       //return <>{fallback}</>; 
 
-    if (requiredRole && user.role !== requiredRole)
-    return<div>Access denied. Required role: {requiredRole}</div>
+    //if (requiredRole && user.role !== requiredRole)
+    //return<div>Access denied. Required role: {requiredRole}</div>
 
     return <>{children}</>;
 }

@@ -1,3 +1,4 @@
+'use client'
 import { useState, CSSProperties } from "react";
 import { PropagateLoader } from "react-spinners";
 

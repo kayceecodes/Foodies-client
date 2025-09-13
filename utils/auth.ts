@@ -1,9 +1,11 @@
 import { ApiResult } from "../types/api";
 import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, RegisterRequest, User } from "../types/auth"
+import { API_BASE_URL,  } from '../constants/api';
+
 
 export async function login(loginRequest: LoginRequest) {    
    try {
-      const response = await fetch("http://localhost:8082/api/auth/login", {
+      const response = await fetch(API_BASE_URL + "/api/auth/login", {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json'
@@ -31,7 +33,7 @@ export async function login(loginRequest: LoginRequest) {
 
 export const register = async (userData: RegisterRequest): Promise<AuthSuccessResponse> => {
    try {
-        const response = await fetch('/api/register', {
+        const response = await fetch(API_BASE_URL + "/api/auth/register", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -43,10 +45,10 @@ export const register = async (userData: RegisterRequest): Promise<AuthSuccessRe
         const apiResult: ApiResult<null> = await response.json().catch(() => ({}));
         
         if (!response.ok || !apiResult.isSuccess) {
-        throw new AuthError(
-            apiResult.message || 'Registration failed',
-            response.status
-        );
+            throw new AuthError(
+                  apiResult.message || 'Registration failed',
+                  response.status
+            );
         }
 
         return { success: true, message: apiResult.message || 'Registration successful' };
@@ -59,7 +61,7 @@ export const register = async (userData: RegisterRequest): Promise<AuthSuccessRe
 }
 
 export const logout = async () => {
-    const response = await fetch(API_BASE_URL + '/api/logout', {
+    const response = await fetch(API_BASE_URL + "/api/auth/logout", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -76,10 +78,12 @@ export const logout = async () => {
 
 export async function getCurrentUser():Promise<User | null> {
    try {
-      const response = await fetch('/api/users/me', {
-            credentials: 'include'
-         }
-      )       
+      const response = await fetch(API_BASE_URL + '/api/users/me', {
+            method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        credentials: 'include',
+   }});       
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -103,13 +107,19 @@ export async function getCurrentUser():Promise<User | null> {
    }
 }
 
-export async function checkAuth() {
+export async function checkAuthentication(): Promise<boolean> {
    try {
-      const response = await fetch('/api/auth/verify', {
+      const response = await fetch(API_BASE_URL + "/api/auth/verify", {
          credentials: 'include'
-      })
+      });
 
-      return response.ok;
+      if (!response.ok) {
+         return false;
+      }
+
+      // Optionally parse the response to get more info
+      const apiResult: ApiResult<any> = await response.json();
+      return apiResult.isSuccess;
    } catch {
       return false;
    }
