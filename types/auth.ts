@@ -9,9 +9,10 @@ export class AuthError extends Error {
 }
 
 export interface LoginResponse {
-  IsSuccess: boolean,
-  Message: string,
-  StatusCode?: number,
+  username: string,
+  firstname: string,
+  lastname: string,
+  zipcode: string
 }
 
 export interface LoginRequest {

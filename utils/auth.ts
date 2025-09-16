@@ -3,7 +3,7 @@ import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, RegisterRe
 import { API_BASE_URL,  } from '../constants/api';
 
 
-export async function login(loginRequest: LoginRequest) {    
+export async function loginUser(loginRequest: LoginRequest) {    
    try {
       const response = await fetch(API_BASE_URL + "/api/auth/login", {
             method: 'POST',
@@ -31,7 +31,7 @@ export async function login(loginRequest: LoginRequest) {
    }
 }
 
-export const register = async (userData: RegisterRequest): Promise<AuthSuccessResponse> => {
+export const registerUser = async (userData: RegisterRequest): Promise<AuthSuccessResponse> => {
    try {
         const response = await fetch(API_BASE_URL + "/api/auth/register", {
         method: 'POST',
@@ -60,7 +60,37 @@ export const register = async (userData: RegisterRequest): Promise<AuthSuccessRe
     }
 }
 
-export const logout = async () => {
+export const logoutUser = async (): Promise<AuthSuccessResponse> => {
+    try {
+        const response = await fetch(API_BASE_URL + "/api/auth/logout", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        });
+
+        let apiResult: ApiResult<object>;
+        try {
+            apiResult = await response.json();
+        } catch {
+            throw new AuthError('Invalid server response', response.status);
+        }
+
+        if (!response.ok) {
+            throw new AuthError(apiResult.message || 'Failed to log out', response.status);
+        }
+
+        return { success: true, message: apiResult.message || 'Logged out successfully' };
+    } catch (error) {
+        if (error instanceof AuthError) {
+            throw error;
+        }
+        throw new AuthError('Network error during logout', 500);
+    }
+}
+
+export const _logoutUser = async () => {
     const response = await fetch(API_BASE_URL + "/api/auth/logout", {
         method: 'POST',
         headers: {
@@ -82,12 +112,13 @@ export async function getCurrentUser():Promise<User | null> {
             method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+        },
         credentials: 'include',
-   }});       
+      });       
 
       if (!response.ok) {
         if (response.status === 401) {
-            throw new AuthError("Failed to login", response.status)
+            throw new AuthError("Failed to get current user data: ", response.status)
          } 
       }
       const apiResult: ApiResult<User> = await response.json();
@@ -119,6 +150,7 @@ export async function checkAuthentication(): Promise<boolean> {
 
       // Optionally parse the response to get more info
       const apiResult: ApiResult<any> = await response.json();
+      console.log("API returned object key apiResult.isSuccess: ", apiResult.isSuccess );
       return apiResult.isSuccess;
    } catch {
       return false;

@@ -35,7 +35,7 @@ export function AuthProvider({children}: AuthProviderProps): JSX.Element {
 
     const login = useCallback(async ({email, password}: LoginRequest): Promise<AuthSuccessResponse> => {
         try {
-            const result = await authService.login({email, password} as LoginRequest)
+            const result = await authService.loginUser({email, password} as LoginRequest)
 
             if (result.success) {
                 await checkAuthStatus();
@@ -48,7 +48,7 @@ export function AuthProvider({children}: AuthProviderProps): JSX.Element {
 
     const register = useCallback(async (registerRequest: RegisterRequest) => {
         try {
-            const result = await authService.register(registerRequest);
+            const result = await authService.registerUser(registerRequest);
             if (result.success) {
                 await checkAuthStatus();
             }
@@ -62,8 +62,10 @@ export function AuthProvider({children}: AuthProviderProps): JSX.Element {
 
     const logout = useCallback(async () => {
         try {
-            const result = await authService.logout();
+            const result = await authService.logoutUser();
             setUser(null);
+            console.log("Called useAuth logout");
+            console.log("User object: ", user);
         } catch(error) {
             console.log('Log out error: ', error);
             setUser(null);

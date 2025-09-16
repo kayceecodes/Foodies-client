@@ -7,7 +7,7 @@ import Loader from '../components/ui/loader/Loader';
 import ValidationSchema from './validationSchema';
 import { AuthSuccessResponse, RegisterRequest } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
-import { register } from '../../../utils/auth';
+import { registerUser } from '../../../utils/auth';
 
 interface RegisterResponse {
     token: string
@@ -48,7 +48,7 @@ export default function RegisterForm() {
         setSubmitting(true);
 
         try {
-            const response = await register(values);
+            const response = await registerUser(values);
             if (response.success) {
                 //onSuccess?.();
                 router.push('/');
@@ -115,5 +115,7 @@ export default function RegisterForm() {
                     </Form>
                 )}
                 </Formik>
+
+                <div className="text-center text-xs mt-4">Already a user <u>log in</u> to your account.</div>
             </div>
 )};

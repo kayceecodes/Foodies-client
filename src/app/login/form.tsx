@@ -7,13 +7,14 @@ import * as Yup from 'yup';
 import Loader from '../components/ui/loader/Loader';
 import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
-import { login } from '../../../utils/auth';
+import { useAuth } from '../../../hooks/useAuth';
 
 export default function LoginForm() {
     const [isLoading, setLoading] = useState<boolean>();
     const [error, setError] = useState<string>();
     const router = useRouter();
     const [loginRequest, setLoginRequest] = useState<LoginRequest>();
+    const { login } = useAuth();
 
     const handleSubmit = async (values: LoginRequest, formikHelpers: FormikHelpers<LoginRequest>) => {
         const { setSubmitting } = formikHelpers;
@@ -27,7 +28,6 @@ export default function LoginForm() {
                 //onSuccess?.();
                 setTimeout(async () => {
                    // alert(JSON.stringify(values, null, 2));
-                    router.push('/');
                 } , 500);
             }
         } catch(error: unknown) {
@@ -35,6 +35,7 @@ export default function LoginForm() {
             setError(error.message || 'Login failed!');
             setSubmitting(false);
         } finally {
+            router.push('/');
             setLoading(false);
             setSubmitting(false);
         }
@@ -49,7 +50,7 @@ export default function LoginForm() {
             isLoading ? 
             <Loader /> 
               :
-            <div className='h-80 p-8 rounded-lg border-stone-500 border-2 w-96 container'>
+            <div className='px-8 py-12 rounded-lg border-stone-500 border-2 w-96 container'>
                 <h1 className="text-2xl font-bold mb-6 text-center">Login to Foodies</h1>
                 <Formik
                     initialValues={{ email: 'tHiddle@gmail.com', password: 'somepw' }}// loginCredentials would be used here
@@ -72,5 +73,8 @@ export default function LoginForm() {
                     </Form>
                 )}
                 </Formik>
+                    <div className="text-center text-xs mt-4">
+                        Don't have an account <u>sign up</u> today. 
+                    </div>
             </div>
 )};
