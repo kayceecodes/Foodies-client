@@ -35,10 +35,10 @@ export default function LoginForm() {
             setError(error.message || 'Login failed!');
             setSubmitting(false);
         } finally {
-            router.push('/');
             setLoading(false);
             setSubmitting(false);
         }
+            router.push('/');
     }
  
     const schema = Yup.object({

@@ -12,6 +12,7 @@ export default function Navbar () {
     const pathname = usePathname();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const {logout, user} = useAuth();
+    const [displayedList, toggleDisplayedList] = useState<boolean>(false);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -32,13 +33,31 @@ export default function Navbar () {
         pathname === '/register' ? 
         null :
         <Link className="flex-0 mr-5 text-sm" href="/register">Sign up</Link>;
+    
+    const AccountList =
+        <div className="absolute w-8 top-0 left-0">
+            <Link className="py-1 px-3" href="/dashboard">
+                <div>Dashboard</div>
+            </Link>
+            <Link className="py-1 px-3" href="/logout">
+                <div>Logout</div>
+            </Link>
+            <Link className="py-1 px-3" href="/switch-users">
+                <div>Switch User</div>
+            </Link>
+        </div> 
+
     const accountLink = 
         isLoggedIn ?  
-        <Link className="flex-0 mr-5" href="/dashboard">
-            <FontAwesomeIcon icon={faUser} />
-        </Link>
+        <div className="flex-0 mr-5 relative" onMouseEnter={() => toggleDisplayedList(true)} onMouseLeave={() => toggleDisplayedList(false)}>
+            <div>
+                <FontAwesomeIcon icon={faUser} />
+                {AccountList}
+            </div>
+        </div>
         : null;
-        
+    
+
     const logoutLink = 
         isLoggedIn ? 
         <Link className="flex-0 mr-5 text-sm" onClick={() => { 
