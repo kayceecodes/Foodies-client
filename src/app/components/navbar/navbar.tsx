@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation"
 import { checkAuthentication } from "../../../../utils/auth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../../../hooks/useAuth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +12,8 @@ export default function Navbar () {
     const pathname = usePathname();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const {logout, user} = useAuth();
-    const [displayedList, toggleDisplayedList] = useState<boolean>(false);
+    const [displayList, setDisplayList] = useState<boolean>(false);
+    const dropdownRef = useRef<HTMLDivElement>(null); 
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -23,6 +24,25 @@ export default function Navbar () {
         checkAuth();
     }
         ,[user]);
+    
+     // Click outside functionality
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setDisplayList(false);
+            }
+        };
+
+        // Add event listener when dropdown is open
+        if (displayList) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        // Cleanup event listener
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [displayList]);
 
     const loginLink =
         isLoggedIn || pathname === '/login' ? 
@@ -35,24 +55,31 @@ export default function Navbar () {
         <Link className="flex-0 mr-5 text-sm" href="/register">Sign up</Link>;
     
     const AccountList =
-        <div className="absolute w-8 top-0 left-0">
-            <Link className="py-1 px-3" href="/dashboard">
+        <div className="absolute py-2 px-4 top-8 right-0 border-white border">
+            <Link className="py-2 text-sm" href="/dashboard">
                 <div>Dashboard</div>
             </Link>
-            <Link className="py-1 px-3" href="/logout">
+            <Link className="py-2 text-sm" href="/logout">
                 <div>Logout</div>
             </Link>
-            <Link className="py-1 px-3" href="/switch-users">
+            <Link className="py-2 text-sm" href="/switch-users">
                 <div>Switch User</div>
             </Link>
         </div> 
 
+    const toggleDisplayList = () => 
+        setDisplayList(prev => !prev)
+
     const accountLink = 
         isLoggedIn ?  
-        <div className="flex-0 mr-5 relative" onMouseEnter={() => toggleDisplayedList(true)} onMouseLeave={() => toggleDisplayedList(false)}>
+        <div 
+        className="flex-0 mr-5 relative cursor-pointer"
+            onClick={toggleDisplayList}
+            ref={dropdownRef}
+        >
             <div>
                 <FontAwesomeIcon icon={faUser} />
-                {AccountList}
+                {displayList ? AccountList : null}
             </div>
         </div>
         : null;
@@ -78,7 +105,7 @@ export default function Navbar () {
             <div className="flex-1">
 
             </div>
-            <nav className="flex flex-1 justify-end pr-5 mt-2">
+            <nav className="flex flex-2 md:flex-1 justify-end mt-2">
                 <Link className="flex-0 mr-5" href="/map">
                     <i className="fa-solid fa-house"></i>
                 </Link>
