@@ -8,6 +8,7 @@ import Loader from '../components/ui/loader/Loader';
 import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
 import { useAuth } from '../../../hooks/useAuth';
+import Link from 'next/link';
 
 export default function LoginForm() {
     const [isLoading, setLoading] = useState<boolean>();
@@ -17,7 +18,7 @@ export default function LoginForm() {
     const { login } = useAuth();
 
     const handleSubmit = async (values: LoginRequest, formikHelpers: FormikHelpers<LoginRequest>) => {
-        const { setSubmitting } = formikHelpers;
+        const { setSubmitting, setStatus } = formikHelpers;
         setLoading(true);
         setError('');
         setSubmitting(true);
@@ -32,13 +33,13 @@ export default function LoginForm() {
             }
         } catch(error: unknown) {
             if (error instanceof Error)
-            setError(error.message || 'Login failed!');
+            setStatus(error.message || 'Login failed!');
             setSubmitting(false);
         } finally {
             setLoading(false);
             setSubmitting(false);
         }
-            router.push('/');
+        router.push('/');
     }
  
     const schema = Yup.object({
@@ -74,7 +75,7 @@ export default function LoginForm() {
                 )}
                 </Formik>
                     <div className="text-center text-xs mt-4">
-                        Don't have an account <u>sign up</u> today. 
+                        Don't have an account <Link className="" href="/signup">sign up</Link> today. 
                     </div>
             </div>
 )};

@@ -1,5 +1,5 @@
 import { ApiResult } from "../types/api";
-import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, RegisterRequest, User } from "../types/auth"
+import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, SignupRequest, User } from "../types/auth"
 import { API_BASE_URL,  } from '../constants/api';
 
 
@@ -31,7 +31,7 @@ export async function loginUser(loginRequest: LoginRequest) {
    }
 }
 
-export const registerUser = async (userData: RegisterRequest): Promise<AuthSuccessResponse> => {
+export const signupUser = async (userData: SignupRequest): Promise<AuthSuccessResponse> => {
    try {
         const response = await fetch(API_BASE_URL + "/api/auth/register", {
         method: 'POST',
@@ -43,10 +43,11 @@ export const registerUser = async (userData: RegisterRequest): Promise<AuthSucce
       });
 
         const apiResult: ApiResult<null> = await response.json().catch(() => ({}));
-        
+        const errorMessages = apiResult.errorMessages?.join("\n");
+
         if (!response.ok || !apiResult.isSuccess) {
             throw new AuthError(
-                  apiResult.message || 'Registration failed',
+                  errorMessages || 'Registration failed',
                   response.status
             );
         }

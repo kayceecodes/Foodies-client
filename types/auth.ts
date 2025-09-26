@@ -20,7 +20,7 @@ export interface LoginRequest {
     password: string,
 }
 
-export interface RegisterRequest {
+export interface SignupRequest {
   firstName: string,
   lastName: string,
   username: string,
@@ -51,7 +51,7 @@ export interface AuthContextType {
   loading: boolean,
   login: (request: LoginRequest) => Promise<AuthSuccessResponse>,
   logout: () => Promise<void>,
-  register: (request: RegisterRequest) => Promise<AuthSuccessResponse>,
+  signup: (request: SignupRequest) => Promise<AuthSuccessResponse>,
   checkAuthStatus: () => Promise<void>,
   isAuthenticated: boolean,
 }

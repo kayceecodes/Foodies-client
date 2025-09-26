@@ -7,7 +7,7 @@ import React, {
   ReactNode,
   useCallback 
 } from 'react';
-import { User, AuthContextType, LoginRequest, RegisterRequest, AuthSuccessResponse } from '../types/auth';
+import { User, AuthContextType, LoginRequest, SignupRequest, AuthSuccessResponse } from '../types/auth';
 import * as authService from '../utils/auth';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -46,9 +46,9 @@ export function AuthProvider({children}: AuthProviderProps): JSX.Element {
         }
     }, [checkAuthStatus]);
 
-    const register = useCallback(async (registerRequest: RegisterRequest) => {
+    const signup = useCallback(async (signupRequest: SignupRequest) => {
         try {
-            const result = await authService.registerUser(registerRequest);
+            const result = await authService.signupUser(signupRequest);
             if (result.success) {
                 await checkAuthStatus();
             }
@@ -80,7 +80,7 @@ export function AuthProvider({children}: AuthProviderProps): JSX.Element {
         user,
         loading,
         login,
-        register,
+        signup,
         logout,
         checkAuthStatus,
         isAuthenticated: user !== null,

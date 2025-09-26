@@ -5,11 +5,11 @@ import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { useRouter } from 'next/navigation';
 import Loader from '../components/ui/loader/Loader';
 import ValidationSchema from './validationSchema';
-import { AuthSuccessResponse, RegisterRequest } from '../../../types/auth';
+import { AuthSuccessResponse, SignupRequest } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
-import { registerUser } from '../../../utils/auth';
+import { signupUser } from '../../../utils/auth';
 
-interface RegisterResponse {
+interface SignupResponse {
     token: string
     refreshToken?: string
     expiresIn: number
@@ -25,11 +25,10 @@ interface UserData {
     zipcode: string
 }
 
-export default function RegisterForm() {
+export default function SignupForm() {
     const [isLoading, setLoading] = useState<boolean>();
-    const [error, setError] = useState<string>();
     const router = useRouter();
-    const initialValues: RegisterRequest = {
+    const initialValues: SignupRequest = {
         firstName: 'John',
         lastName: 'Doe',
         username: 'jdoe',
@@ -41,27 +40,29 @@ export default function RegisterForm() {
         zipcode: '98039'
     }
 
-    const handleSubmit = async (values: RegisterRequest, formikHelpers: FormikHelpers<RegisterRequest>) => {
-        const { setSubmitting } = formikHelpers;
+    const handleSubmit = async (values: SignupRequest, formikHelpers: FormikHelpers<SignupRequest>) => {
+        const { setSubmitting, setStatus, setFieldError } = formikHelpers;
         setLoading(true);
-        setError('');
+        setStatus('');
         setSubmitting(true);
 
         try {
-            const response = await registerUser(values);
+            const response = await signupUser(values);
             if (response.success) {
                 //onSuccess?.();
-                router.push('/');
                 setTimeout(async () => {
                     // alert(JSON.stringify(values, null, 2));
-                    router.push('/');
                 } , 500);
+                router.push('/');
             }
         } catch(error: unknown) {
-            if (error instanceof Error)
-            setError(error.message || 'Registration failed!');
+            if (error instanceof Error) {
+                // If your API returns field-level errors you can call setFieldError(field, message)
+                // e.g. setFieldError('email', 'Email already taken')
+                setStatus(error.message || 'Sign up failed!');
+            }
         } finally {
-            setLoading(true);
+            setLoading(false);
             setSubmitting(false);
         }
     }
@@ -74,11 +75,12 @@ export default function RegisterForm() {
                 <h1 className="text-2xl font-bold mb-6 text-center">Sign up with Foodies</h1>
                 <Formik
                     initialValues={initialValues}
-                    validateSchema={ValidationSchema}
+                    validationSchema={ValidationSchema}
                     onSubmit={handleSubmit}
                 >
-                {({ isSubmitting, errors }) => (
+                {({ isSubmitting, errors, status }) => (
                     <Form className="flex justify-center flex-col">
+                        {status && <div className="border-e-red-700 text-red-600">{status}</div>}
                         <div className='mb-3'>
                             <label htmlFor="username">Username</label>
                             <Field type="username" name="username" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
