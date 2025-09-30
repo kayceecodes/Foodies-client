@@ -52,7 +52,11 @@ export const signupUser = async (userData: SignupRequest): Promise<AuthSuccessRe
             );
         }
 
-        return { success: true, message: apiResult.message || 'Registration successful' };
+        return { 
+                success: true, 
+                message: apiResult.message || 'Registration successful',
+            
+            };
     } catch (error) {
         if (error instanceof AuthError) {
             throw error;

@@ -55,7 +55,7 @@ export default function Navbar () {
         <Link className="flex-0 mr-5 text-sm" href="/signup">Sign up</Link>;
     
     const AccountList =
-        <div className="absolute py-2 px-4 top-8 right-0 border-white border">
+        <div className="absolute py-2 px-4 top-8 right-0 min-w-32 border-white border">
             <Link className="py-2 text-sm" href="/dashboard">
                 <div>Dashboard</div>
             </Link>

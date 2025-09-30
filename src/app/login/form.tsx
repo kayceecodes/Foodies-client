@@ -34,7 +34,7 @@ export default function LoginForm() {
         } catch(error: unknown) {
             if (error instanceof Error)
             setStatus(error.message || 'Login failed!');
-            setSubmitting(false);
+            //setSubmitting(false);Want to check if this is the current issue
         } finally {
             setLoading(false);
             setSubmitting(false);
