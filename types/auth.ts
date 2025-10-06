@@ -32,6 +32,8 @@ export interface SignupRequest {
   zipcode: string,
 }
 
+export interface SignupResponse extends LoginResponse {}
+
 export interface User {
   id: string,
   email: string,

@@ -18,7 +18,6 @@ const passwordSchema = Yup.string()
 
 
 const addressSchema = {      
-  address: Yup.object({
     street: Yup.string()
       .matches(
         /^[a-zA-Z0-9\s.,'-]+$/,
@@ -37,20 +36,22 @@ const addressSchema = {
       .oneOf(stateAbbreviations, 'State must be a valid U.S. state abbreviation')
       .required('State is required'),
   
-    zip: Yup.string()
+    zipcode: Yup.string()
       .matches(
         /^\d{5}(-\d{4})?$/,
         'ZIP code must be 5 digits or in the 5+4 format (e.g., 12345 or 12345-6789)'
       )
-      .required('ZIP code is required'),
-  })
+      .required('Zipcode is required'),
 }
   
 const ValidationSchema = Yup.object({
   username: Yup.string().required('Username is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   password: passwordSchema,
-  address: addressSchema.address
+  streetAddress: addressSchema.street,
+  city: addressSchema.city,
+  state: addressSchema.state,
+  zipcode: addressSchema.zipcode
 });
 
 export default ValidationSchema

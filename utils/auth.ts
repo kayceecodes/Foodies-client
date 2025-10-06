@@ -1,26 +1,31 @@
 import { ApiResult } from "../types/api";
-import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, SignupRequest, User } from "../types/auth"
+import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse, SignupRequest, SignupResponse, User } from "../types/auth"
 import { API_BASE_URL,  } from '../constants/api';
 
 
 export async function loginUser(loginRequest: LoginRequest) {    
    try {
-      const response = await fetch(API_BASE_URL + "/api/auth/login", {
+        const response = await fetch(API_BASE_URL + "/api/auth/login", {
             method: 'POST',
             headers: {
-               'Content-Type': 'application/json'
+                'Content-Type': 'application/json'
             },
             credentials: 'include',
             body: JSON.stringify(loginRequest)
-      })
+        })
 
-      const apiResult: ApiResult<LoginResponse> = await response.json().catch(() => {});
+        let apiResult: ApiResult<LoginResponse>;
+        try {
+            apiResult = await response.json();
+        } catch(jsonError) {
+            throw new AuthError('Invalid server response', response.status);
+        }
 
-      if(!response.ok) {
-               throw new AuthError(apiResult.message || 'Failed to log in', response.status);
-      }
+        if(!response.ok) {
+            throw new AuthError(apiResult.message || 'Failed to log in', response.status);
+        }
 
-   return { success: true, message: apiResult.message || 'Login Successful' };
+        return { success: true, message: apiResult.message || 'Login Successful' };
    } catch (error) {
 
       if (error instanceof AuthError) {
@@ -31,7 +36,7 @@ export async function loginUser(loginRequest: LoginRequest) {
    }
 }
 
-export const signupUser = async (userData: SignupRequest): Promise<AuthSuccessResponse> => {
+export const signupUser = async (signupRequest: SignupRequest): Promise<AuthSuccessResponse> => {
    try {
         const response = await fetch(API_BASE_URL + "/api/auth/register", {
         method: 'POST',
@@ -39,23 +44,27 @@ export const signupUser = async (userData: SignupRequest): Promise<AuthSuccessRe
             'Content-Type': 'application/json',
       },
         credentials: 'include',
-        body: JSON.stringify(userData),
+        body: JSON.stringify(signupRequest),
       });
 
-        const apiResult: ApiResult<null> = await response.json().catch(() => ({}));
-        const errorMessages = apiResult.errorMessages?.join("\n");
+        let apiResult: ApiResult<SignupResponse>;
+        try {
+            apiResult = await response.json();
+        } catch(jsonError) {
+            throw new AuthError('Invalid server response', response.status);
+        }
 
         if (!response.ok || !apiResult.isSuccess) {
+            const errors = apiResult.errors?.join("\n");
             throw new AuthError(
-                  errorMessages || 'Registration failed',
+                  errors || 'Registration failed',
                   response.status
             );
         }
 
         return { 
                 success: true, 
-                message: apiResult.message || 'Registration successful',
-            
+                message: apiResult.message || 'Registration successful', 
             };
     } catch (error) {
         if (error instanceof AuthError) {
