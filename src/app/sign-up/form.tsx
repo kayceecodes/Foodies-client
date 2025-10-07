@@ -66,7 +66,7 @@ export default function SignupForm() {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="py-6 px-10 md:py-8 md:px-16 rounded-lg border-stone-500 bg-neutral-800 border-2 max-w-screen-sm container">
+    <div className="mx-6 py-6 px-10 md:py-8 md:px-16 rounded-lg border-stone-500 bg-neutral-800 border-2 max-w-screen-sm container">
       <h1 className="text-2xl font-bold mb-6 text-center">
         Sign up with Foodies
       </h1>

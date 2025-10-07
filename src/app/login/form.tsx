@@ -51,7 +51,7 @@ export default function LoginForm() {
             isLoading ? 
             <Loader /> 
               :
-            <div className='px-8 py-12 rounded-lg border-stone-500 bg-neutral-900 border-[0.7px] w-96 container mx-6'>
+            <div className='mx-6 px-8 py-12 rounded-lg border-stone-500 bg-neutral-900 border-[0.7px] w-96 container'>
                 <h1 className="text-2xl font-bold mb-6 text-center">Login to Foodies</h1>
                 <Formik
                     initialValues={{ email: 'tHiddle@gmail.com', password: 'somepw' }}// loginCredentials would be used here
