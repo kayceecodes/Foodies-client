@@ -6,6 +6,7 @@ import Navbar from './components/navbar/navbar'
 import { AuthProvider } from '../../hooks/useAuth'
 import CustomProvider from '@/redux/CustomProvider'
 import store from '@/redux/store'
+import Search from './components/search/search'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,7 +21,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <body className={`${inter.className}`}>
             <CustomProvider store={store}>
               <AuthProvider>
-                <Navbar /> 
+                <Navbar />
+                <Search /> 
                   {/* <CirlclesBackground> */}
                     {children}
                   {/* </CirlclesBackground> */}

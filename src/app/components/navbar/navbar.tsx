@@ -41,19 +41,9 @@ export default function Navbar () {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [isDropdownOpen]);
-
-    const loginLink =
-        isLoggedIn ? 
-        null :
-        <Link className="flex-0 mr-5 text-sm" href="/login">Login</Link>;
-
-    const signupLink =
-        isLoggedIn ? 
-        null :
-        <Link className="flex-0 mr-5 text-sm" href="/sign-up">Sign up</Link>;
-    
-    const AccountList =
-        <div className="absolute py-2 px-4 top-8 right-0 min-w-32 border-white border">
+ 
+    const AccountLinksList =
+        <div className="absolute py-2 px-4 top-8 right-0 min-w-32 border-stone-700 border-[0.9px] bg-neutral-800 rounded-md border">
             <Link className="py-2 text-sm block" href="/dashboard">
                 Dashboard
             </Link>
@@ -66,53 +56,44 @@ export default function Navbar () {
             <Link className="py-2 text-sm block" href="/switch-users">
                 Switch User
             </Link>
-            <Link className="py-2 text-sm block" href="/sign-up">
-                Add New User
-            </Link>
         </div> 
 
     const toggleDropdownOpen = () => 
         setIsDropdownOpen(prev => !prev)
 
-    const accountLink = 
+    const accountLinksList = 
         isLoggedIn ?  
         <div 
-        className="flex-0 mr-5 relative cursor-pointer"
+        className="relative flex-0 mr-2 md:mr-3 cursor-pointer"
             onClick={toggleDropdownOpen}
             ref={dropdownRef}
         >
             <div>
                 <FontAwesomeIcon icon={faUser} />
-                {isDropdownOpen ? AccountList : null}
+                {isDropdownOpen ? AccountLinksList : null}
             </div>
         </div>
-        : null;
-    
-    const logoutLink = 
-        isLoggedIn ? 
-        <Link className="flex-0 mr-5 text-sm" onClick={() => { 
-            logout();
-            setIsLoggedIn(false);
-        }} href="/"> Logout </Link>
-        : null;
+        : null; 
     
     return (
-        <div className="flex w-100 md:max-w-screen-xl mx-auto justify-between bg-neutral-800 py-1 rounded-sm">
+        <nav className="flex w-100 justify-between border-b-stone-700 border-b-[0.9px] bg-neutral-800 py-2 rounded-sm">
             <div className="flex-1">
 
             </div>
-            <nav className="flex flex-1 md:flex-1 justify-end mt-2">
-                <Link className="flex-0 mr-5" href="/map">
-                    <i className="fa-solid fa-house"></i>
-                </Link>
-                <Link className="flex-0 mr-5" href="/map">
+            <div className="flex flex-1 md:flex-1 justify-end">
+                {/* <Link className="flex-0 mr-5" href="/map">
                     <i className="fa-solid fa-magnifying-glass"></i>
-                   <FontAwesomeIcon icon={faSearch} />
-                </Link> 
-                {loginLink}
-                {signupLink}
-                {accountLink}
-            </nav> 
-        </div>
+                    <FontAwesomeIcon icon={faSearch} />
+                </Link>  */}
+                {isLoggedIn ? null :
+                    <Link className="flex-0 pt-0.5 mr-5 text-md" href="/login">
+                        Login
+                    </Link>}
+                <Link className="flex-0 pt-0.5 mr-5 text-md" href="/sign-up">
+                    Sign up
+                </Link>
+                {accountLinksList}
+            </div> 
+        </nav>
     );
 }

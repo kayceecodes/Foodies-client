@@ -66,7 +66,7 @@ export default function SignupForm() {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="mx-6 py-6 px-10 md:py-8 md:px-16 rounded-lg border-stone-500 bg-neutral-800 border-2 max-w-screen-sm container">
+    <div className="mx-6 px-6 py-10 md:px-8 md:py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] container max-w-screen-sm">
       <h1 className="text-2xl font-bold mb-6 text-center">
         Sign up with Foodies
       </h1>
@@ -224,7 +224,7 @@ export default function SignupForm() {
             </div>
             <button
               type="submit"
-              className="border-stone-600 rounded border-2 py-2 my-4 disabled:opacity-50"
+              className="border-stone-700 rounded border-[0.9px] py-2 my-4 disabled:opacity-50"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Submitting..." : "Submit"}

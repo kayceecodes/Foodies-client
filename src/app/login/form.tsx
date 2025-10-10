@@ -51,7 +51,7 @@ export default function LoginForm() {
             isLoading ? 
             <Loader /> 
               :
-            <div className='mx-6 px-8 py-12 rounded-lg border-stone-500 bg-neutral-900 border-[0.7px] w-96 container'>
+            <div className='mx-6 px-8 py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] w-96 container'>
                 <h1 className="text-2xl font-bold mb-6 text-center">Login to Foodies</h1>
                 <Formik
                     initialValues={{ email: 'tHiddle@gmail.com', password: 'somepw' }}// loginCredentials would be used here
@@ -68,7 +68,7 @@ export default function LoginForm() {
                             <Field type="password" name="password" className="mb-4 w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage name="password" component="div" className="text-red-800" />
                         </div>
-                        <button type="submit" className="border-stone-500 rounded border-[0.9px] py-2" disabled={isSubmitting}>
+                        <button type="submit" className="border-stone-700 rounded border-[0.9px] py-2" disabled={isSubmitting}>
                             Submit
                         </button>
                     </Form>
