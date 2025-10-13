@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Loader from "../components/ui/loader/Loader";
 import ValidationSchema from "./validationSchema";
 import { SignupRequest } from "../../../types/auth";
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function SignupForm() {
   const [isLoading, setLoading] = useState<boolean>(false);

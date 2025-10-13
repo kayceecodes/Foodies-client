@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import Loader from '../components/ui/loader/Loader';
 import { AuthError, AuthSuccessResponse, LoginRequest, LoginResponse } from '../../../types/auth';
 import { ApiResult } from '../../../types/api';
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from '../../hooks/useAuth';
 import Link from 'next/link';
 
 export default function LoginForm() {

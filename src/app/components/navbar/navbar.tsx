@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation"
 import { checkAuthentication } from "../../../../utils/auth";
 import { useState, useEffect, useRef } from "react";
-import { useAuth } from "../../../../hooks/useAuth";
+import { useAuth } from "../../../hooks/useAuth";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 

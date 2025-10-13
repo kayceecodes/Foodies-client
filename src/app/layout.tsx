@@ -3,10 +3,10 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import CirlclesBackground from './components/ui/CirclesBackground'
 import Navbar from './components/navbar/navbar'
-import { AuthProvider } from '../../hooks/useAuth'
+import { AuthProvider } from '../hooks/useAuth'
 import CustomProvider from '@/redux/CustomProvider'
 import store from '@/redux/store'
-import Search from './components/search/search'
+import Search from './components/search/searchsection'
 
 const inter = Inter({ subsets: ['latin'] })
 

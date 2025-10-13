@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Search() {
+function SearchSection() {
   return (
     <div className="w-full py-6 border-b-stone-700 border-b-[0.9px] bg-neutral-800">
       <div className="m-auto w-48 md:w-64 ">
@@ -10,4 +10,4 @@ function Search() {
   )
 }
 
-export default Search
+export default SearchSection;
