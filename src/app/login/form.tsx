@@ -61,11 +61,11 @@ export default function LoginForm() {
                 {({ isSubmitting, errors }) => (
                     <Form className="flex justify-center flex-col">
                         <div className='mb-6'>
-                            <Field type="email" name="email" className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <Field type="email" name="email" className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage className="text-red-600 text-sm absolute" name="email" component="div" />
                         </div>
                         <div className='mb-6'>
-                            <Field type="password" name="password" className="mb-4 w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                            <Field type="password" name="password" className="mb-4 w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
                             <ErrorMessage name="password" component="div" className="text-red-800" />
                         </div>
                         <button type="submit" className="border-stone-700 rounded border-[0.9px] py-2" disabled={isSubmitting}>

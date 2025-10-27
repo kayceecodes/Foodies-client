@@ -91,7 +91,7 @@ export default function SignupForm() {
                     type="text"
                     name="firstName"
                     id="firstName"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage
                     className="text-red-600 text-sm"
@@ -106,7 +106,7 @@ export default function SignupForm() {
                     type="text"
                     name="lastName"
                     id="lastName"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage
                     className="text-red-600 text-sm"
@@ -121,7 +121,7 @@ export default function SignupForm() {
                     type="text"
                     name="username"
                     id="username"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage
                     className="text-red-600 text-sm"
@@ -136,7 +136,7 @@ export default function SignupForm() {
                     type="email"
                     name="email"
                     id="email"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage
                     className="text-red-600 text-sm"
@@ -151,7 +151,7 @@ export default function SignupForm() {
                 type="password"
                 name="password"
                 id="password" 
-                className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <ErrorMessage
                 className="text-red-600 text-sm"
@@ -167,7 +167,7 @@ export default function SignupForm() {
                     type="text"
                     name="streetAddress"
                     id="streetAdress"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <ErrorMessage
                     className="text-red-600 text-sm"
@@ -183,7 +183,7 @@ export default function SignupForm() {
                     type="text"
                     name="city"
                     id="city"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <ErrorMessage
                     className="text-red-600 text-sm"
@@ -198,7 +198,7 @@ export default function SignupForm() {
                     type="text"
                     name="state"
                     id="state"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <ErrorMessage
                     className="text-red-600 text-sm"
@@ -213,7 +213,7 @@ export default function SignupForm() {
                     type="text"
                     name="zipcode"
                     id="zipcode"
-                    className="w-full px-3 py-2 text-zinc-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <ErrorMessage
                     className="text-red-600 text-sm"
