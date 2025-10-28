@@ -40,10 +40,10 @@ const customStyles: StylesConfig<RestaurantOption, false> = {
 export default function RestaurantSearch() {
     const [inputValue, setInputValue] = useState('');
     const [options, setOptions] = useState<RestaurantOption[]>([]);
-    const debouncedInput = useDebounce(inputValue, 500);
+    const debouncedInput = useDebounce(inputValue, 1500);
 
     useEffect(() => {
-        if (debouncedInput.length < 2) {
+        if (debouncedInput.length < 6) {
             setOptions([]);
             return;
         }
@@ -65,7 +65,7 @@ export default function RestaurantSearch() {
     return (
         <div className="w-full bg-neutral-800">
                 <AsyncSelect
-                className="m-auto w-48 md:w-64"
+                className="m-auto w-48 md:w-64 py-6"
                 styles={customStyles}
                     inputValue={inputValue}
                     onInputChange={setInputValue}

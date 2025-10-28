@@ -17,3 +17,5 @@
 
 **September 12th**
 In React, functions are re-created on every render. If you pass an inline function to useEffect and put it in the dependency array, the effect will re-run on every render because the function reference changes each time. To avoid that, you can wrap the function in useCallback, which memoizes the reference and only re-creates it when its dependencies change. This makes it safe to include in the dependency array without causing unnecessary re-runs. However, if you omit dependencies, you risk stale closures where your callback captures outdated state or props.
+**October 27th**
+Tailwind/Flexbox has flex-grow-0 aka "grow-0" & flex-0. Flex-0 sets flexbasis to 0 cause it's a short hand. You should use grow-0 over flex-0. Grow-0 on an item will leave flex-basis & flexshrink to their defaults (flexbasis 0%, flexshrink 1) so there's no need for w-fit or w-auto on an item's class. 

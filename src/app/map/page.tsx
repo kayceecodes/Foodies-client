@@ -4,7 +4,8 @@ import { addOne } from '@/redux/slices/counterSlice';
 import store from '@/redux/store';
 import Head from 'next/head';
 import React, { ErrorInfo, useEffect, useState } from 'react';
-import Map, { Marker } from 'react-map-gl';
+import { Map, Marker } from 'react-map-gl/mapbox';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 interface Business {
   alias: string,

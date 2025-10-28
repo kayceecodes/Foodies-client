@@ -5,7 +5,8 @@ import React, {
   createContext, 
   useContext, 
   ReactNode,
-  useCallback 
+  useCallback, 
+  JSX
 } from 'react';
 import { User, AuthContextType, LoginRequest, SignupRequest, AuthSuccessResponse } from '../../types/auth';
 import * as authService from '../../utils/auth';

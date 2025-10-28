@@ -76,20 +76,20 @@ export default function Navbar () {
         : null; 
     
     return (
-        <nav className="flex w-100 justify-between border-b-stone-700 border-b-[0.9px] bg-neutral-800 py-2 rounded-sm">
+        <nav className="flex w-full justify-between border-b-stone-700 border-b-[0.9px] bg-neutral-800 py-2 rounded-sm">
             <div className="flex-1">
 
             </div>
-            <div className="flex flex-1 md:flex-1 justify-end">
+            <div className="flex flex-1 justify-end">
                 {/* <Link className="flex-0 mr-5" href="/map">
                     <i className="fa-solid fa-magnifying-glass"></i>
                     <FontAwesomeIcon icon={faSearch} />
                 </Link>  */}
                 {isLoggedIn ? null :
-                    <Link className="flex-0 pt-0.5 mr-5 text-md" href="/login">
+                    <Link className="grow-0 w-fit pt-0.5 mr-5 text-md" href="/login">
                         Login
                     </Link>}
-                <Link className="flex-0 pt-0.5 mr-5 text-md" href="/sign-up">
+                <Link className="grow-0 w-fit pt-0.5 mr-5 text-md" href="/sign-up">
                     Sign up
                 </Link>
                 {accountLinksList}

@@ -20,7 +20,7 @@ export function FormikSelect({ options, selectProps, ...fieldProps }: SelectProp
 
       return (
         <select {...field} {...selectProps} onChange={handleChange}>
-          {options.map((option) => (
+          {options.map((option: Option) => (
             <option key={option.value} value={option.value}>
               {option.label}
             </option>

@@ -6,7 +6,7 @@ import Navbar from './components/navbar/navbar'
 import { AuthProvider } from '../hooks/useAuth'
 import CustomProvider from '@/redux/CustomProvider'
 import store from '@/redux/store'
-import Search from './components/search/searchsection'
+import Search from './components/search/searchbar'
 
 const inter = Inter({ subsets: ['latin'] })
 

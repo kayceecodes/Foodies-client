@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import LoginForm from './form';
 import Loader from '../components/ui/loader/Loader';
