@@ -91,6 +91,7 @@ export default function SignupForm() {
                     type="text"
                     name="firstName"
                     id="firstName"
+                    disabled={isSubmitting} 
                     className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage
@@ -106,6 +107,7 @@ export default function SignupForm() {
                     type="text"
                     name="lastName"
                     id="lastName"
+                    disabled={isSubmitting} 
                     className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage
@@ -121,6 +123,7 @@ export default function SignupForm() {
                     type="text"
                     name="username"
                     id="username"
+                    disabled={isSubmitting} 
                     className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage
@@ -136,6 +139,7 @@ export default function SignupForm() {
                     type="email"
                     name="email"
                     id="email"
+                    disabled={isSubmitting} 
                     className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                     <ErrorMessage

@@ -64,7 +64,7 @@ export default function Navbar () {
     const accountLinksList = 
         isLoggedIn ?  
         <div 
-        className="relative flex-0 mr-2 md:mr-3 cursor-pointer"
+        className="relative flex-0 mr-2 z-1 md:mr-3 cursor-pointer"
             onClick={toggleDropdownOpen}
             ref={dropdownRef}
         >

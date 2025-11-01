@@ -64,14 +64,14 @@ export default function RestaurantSearch() {
 
     return (
         <div className="w-full bg-neutral-800">
-                <AsyncSelect
+                {/* <AsyncSelect
                 className="m-auto w-48 md:w-64 py-6"
                 styles={customStyles}
                     inputValue={inputValue}
                     onInputChange={setInputValue}
                     options={options}
                     placeholder="Search restaurants..."
-                />
+                /> */}
         </div>
     );
 }
