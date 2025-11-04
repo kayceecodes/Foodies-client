@@ -11,35 +11,30 @@ import { useAuth } from '../../hooks/useAuth';
 import Link from 'next/link';
 
 export default function LoginForm() {
-    const [isLoading, setLoading] = useState<boolean>();
-    const [error, setError] = useState<string>();
     const router = useRouter();
-    const [loginRequest, setLoginRequest] = useState<LoginRequest>();
     const { login } = useAuth();
 
     const handleSubmit = async (values: LoginRequest, formikHelpers: FormikHelpers<LoginRequest>) => {
         const { setSubmitting, setStatus } = formikHelpers;
-        setLoading(true);
-        setError('');
         setSubmitting(true);
+        let response: AuthSuccessResponse | undefined = undefined;
 
         try {
-            const response = await login(values);
+            response = await login(values);
             if (response.success) {
                 //onSuccess?.();
-                setTimeout(async () => {
-                   // alert(JSON.stringify(values, null, 2));
-                } , 500);
-
+                // alert(JSON.stringify(values, null, 2));
+                //await new Promise((resolve) => setTimeout(resolve, 1000));
                 router.push('/');
+                return;
             }
+            setStatus({error: response.message || 'Invalid credentials!'})
         } catch(error: unknown) {
-            if (error instanceof Error)
-            setStatus({ error: error.message || 'Login failed!'});
-            //setSubmitting(false);Want to check if this is the current issue
+            const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+            setStatus({ error: message });
         } finally {
-            setLoading(false);
-            setSubmitting(false);
+            if (!response?.success) // prevent state update after navigation
+                setSubmitting(false);
         }
     }
  
@@ -80,11 +75,11 @@ export default function LoginForm() {
                             Submit
                         </button>
                     </Form>
+                    <div className="text-center text-xs mt-4">
+                        Don't have an account <Link className="" href="/signup"><u>sign up</u></Link> today. 
+                    </div>
                 </div>
             )}
             </Formik>
-            <div className="text-center text-xs mt-4">
-                Don't have an account <Link className="" href="/signup"><u>sign up</u></Link> today. 
-            </div>
         </div>
 )};
