@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
-import LoginForm from './form';
+import LoginForm from './Form';
 import Loader from '../components/ui/loader/Loader';
 import { boolean } from 'yup';
 
