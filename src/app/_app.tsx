@@ -3,6 +3,8 @@ import store from '@/redux/store';
 import { AppProps } from 'next/app';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { StyledEngineProvider, ThemeProvider, CssBaseline } from "@mui/material";
+import { darkTheme } from '../../theme';
 
 
 const queryClient = new QueryClient({
@@ -16,12 +18,15 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps }: AppProps) {
 
     return(
-            <QueryClientProvider client={queryClient}>
-                <CustomProvider store={store}>
+        <QueryClientProvider client={queryClient}>
+            <CustomProvider store={store}>
+                <ThemeProvider theme={darkTheme}>
+                    <CssBaseline />
                     <Component {...pageProps} />
-                    <ReactQueryDevtools initialIsOpen={false} />
-                </CustomProvider>
-            </QueryClientProvider>
+                </ThemeProvider>
+            </CustomProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
     );
     
 };

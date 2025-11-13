@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  Formik,
-  Form,
-  Field,
-  ErrorMessage,
-  FormikHelpers,
-  FormikState,
-  FormikProps,
-} from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers, FormikState, FormikProps } from "formik";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import Loader from "../components/ui/loader/Loader";
@@ -23,9 +15,8 @@ import { ApiResult } from "../../../types/api";
 import { useAuth } from "../../hooks/useAuth";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { Button } from "primereact/button";
-import { Password } from "primereact/password";
-import { classNames } from "primereact/utils";
+import Button from "@mui/material/Button";
+import FormikTextField from './FormikTextField';
 
 interface FormValues {
   email: string;
@@ -53,7 +44,7 @@ export default function LoginForm() {
       if (response.success) {
         //onSuccess?.();
         // alert(JSON.stringify(values, null, 2));
-        //await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         router.push("/");
         return;
       }
@@ -70,20 +61,19 @@ export default function LoginForm() {
   };
 
   const schema = Yup.object({
-    email: Yup.string().email("Invalid email").required("Email is required"),
+    email: Yup.string().email("Invalid email format").required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
 
-  // const isFormFieldInvalid = (formik: FormikProps<FormValues>, fieldName: string) => {
-  //     return !!(formik.touched[fieldName as keyof FormValues] && formik.errors[fieldName as keyof FormValues]);
-  // }
+  const isFormFieldInvalid = (formik: FormikProps<FormValues>, fieldName: string) => {
+      return !!(formik.touched[fieldName as keyof FormValues] && formik.errors[fieldName as keyof FormValues]);
+  }
 
-  const isFormFieldInvalid = (
-    formik: FormikProps<FormStatus>,
-    fieldName: string
-  ) => {
-    return;
-  };
+  const getFormErrorMessage = (formik: FormikProps<FormValues>, fieldName: string) => {
+    return isFormFieldInvalid(formik, fieldName) ? (
+      <small className="p-error">{formik.errors[fieldName as keyof FormValues]}</small>
+    ): null;
+  }
 
   return (
     <AnimatePresence>
@@ -111,53 +101,34 @@ export default function LoginForm() {
                   </div>
                 </motion.div>
               )}
-              {/* <div className={`transition-opacity duration-500 ease-in-out ${status?.errors ? "opacity-0" : "opacity-100"}`}>
-                            {status?.error ? status.error : ""}
-                        </div> */}
+              <FormikTextField name="email" label="Email" variant="outlined" />
               <div className="mb-6 text-neutral-300">
-                <label htmlFor="email" className="w-full text-sm">
-                  Email
-                </label>
-                <Field
-                  type="email"
-                  name="email"
-                  disabled={formik.isSubmitting}
-                  className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <ErrorMessage
-                  className="text-red-600 text-sm absolute"
-                  name="email"
-                  component="div"
-                />
-              </div>
-              <div className="mb-6 text-neutral-300">
-                <label htmlFor="password" className="w-full text-sm">
-                  Password
-                </label>
                 <Field
                   type="password"
+                  placeholder="Password"
                   name="password"
                   disabled={formik.isSubmitting}
-                  className="mb-4 w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-800"
-                />
+                {getFormErrorMessage(formik, 'password')}
               </div>
               <Button
                 type="submit"
-                label="Submit"
-                className=" border-stone-500 rounded border-[0.9px] py-2"
-                disabled={formik.isSubmitting}
-              />
+                color="primary"
+                sx={{
+                  border: "0.9px solid #78716caa",
+                  borderRadius: "8px",
+                  color: "#d1d5dc"
+                }}
+                disabled={formik.isSubmitting}>
+                  Submit
+                </Button>
             </Form>
             <div className="text-center text-xs mt-4">
-              Don't have an account{" "}
+              Don't have an account
               <Link className="" href="/signup">
-                <u>sign up</u>
-              </Link>{" "}
+                {" "}<u>sign up</u>{" "}
+              </Link>
               today.
             </div>
           </div>

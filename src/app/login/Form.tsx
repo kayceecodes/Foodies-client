@@ -16,6 +16,7 @@ import { useAuth } from "../../hooks/useAuth";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
+import FormikTextField from "./FormikTextField";
 
 interface FormValues {
   email: string;
@@ -100,16 +101,7 @@ export default function LoginForm() {
                   </div>
                 </motion.div>
               )}
-              <div className="mb-6 text-neutral-300">
-                <Field
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  disabled={formik.isSubmitting}
-                  className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {getFormErrorMessage(formik, 'email')}
-              </div>
+              <FormikTextField name="email" label="Email" variant="outlined" />
               <div className="mb-6 text-neutral-300">
                 <Field
                   type="password"
