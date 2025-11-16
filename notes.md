@@ -6,12 +6,12 @@
 5. falsey values: null, undefined, 0, "", false. 
     Used in code such as: 
     if(!respone.Data || counter)
-    ^^ This checks if the response if falsey(null or undefined) or if counter is falsey(0)
+    ^^ This checks if the response if falsey(null or undefined) or if counter is falsey(0) because counter starts at 0(falsey)
 6. You can create extended Error classes and check if they are instances of the newly created Error class.
 7. APIs can return any response object so when it comes to errors in catch block it will allow any catch type but you may manually throw an error after checking for a response.ok(which is a boolean derived from if the code is 200-299 or not) and then your 'catch' will catch an error of Type Error since it was thrown.
 
 **September 8th**
-1. 'use client' - If you don’t add "use client" to the right parent component, Next.js will throw errors all the way down the component tree, saying each child also needs to be a client component to use that client-side feature. 
+1. Client boundary is established at the top - Once a component is marked "use client", all its children are automatically client components (they inherit the client context)
     *i.e. ReduxStore > RootLayout > someUI*
     A component that needs to be declared a client component is Redux's store provider or another provider that uses state management such as context api. Commonly in other HOCs. These are client side tools. 
 
@@ -28,19 +28,23 @@
 **Nov 5th**
 1. Formiks prop types will take in types in this order Values, Status = any, when assigning types to Formik.
     example:
-```ts
-    interface FormikProps<Values, Status = any> {
-        values: Values;
-        status?: Status;
-        errors: FormikErrors<Values>;
-        touched: FormikTouched<Values>;
-        isSubmitting: boolean;
-    }
-    <Formik<MyValues, MyFormStatus>
-        intialValues={initialValues}>
-        {({ status }) => (
-            <>
-                {status?.errors && <p>{status.errors}</p>}
-            </>
-        )}
-    </Formik>
+    ```ts
+        interface FormikProps<Values, Status = any> {
+            values: Values;
+            status?: Status;
+            errors: FormikErrors<Values>;
+            touched: FormikTouched<Values>;
+            isSubmitting: boolean;
+        }
+        <Formik<MyValues, MyFormStatus>
+            intialValues={initialValues}>
+            {({ status }) => (
+                <>
+                    {status?.errors && <p>{status.errors}</p>}
+                </>
+            )}
+        </Formik> 
+
+**Nov 11th**
+1. Mui & Formik uses similar form props so it is important to Omit certain props when defining a type that combines the two into on component.
+    example: ```ts type FormikTextFieldProps = FieldHookConfig<string> & Omit<TextFieldProps\,'name' | 'value' | 'onChange' | 'onBlur'>;
