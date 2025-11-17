@@ -16,9 +16,6 @@ export default function FomikTextField({label, ...props}:FormikTextFieldProps): 
             error={showError}
             helperText={showError ? meta.error : props.helperText}
             fullWidth
-            sx={{
-                color: "#ddd"
-            }}
         />
     )
 
