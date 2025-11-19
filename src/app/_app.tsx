@@ -18,15 +18,7 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps }: AppProps) {
 
     return(
-        <QueryClientProvider client={queryClient}>
-            <CustomProvider store={store}>
-                <ThemeProvider theme={darkTheme}>
-                    <CssBaseline />
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            </CustomProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+            <Component {...pageProps} />
     );
     
 };

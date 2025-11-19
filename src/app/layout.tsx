@@ -1,14 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-import CirlclesBackground from './components/ui/CirclesBackground'
 import Navbar from './components/navbar/Navbar'
-import { AuthProvider } from '../hooks/useAuth'
-import CustomProvider from '@/redux/CustomProvider'
-import store from '@/redux/store'
 import Search from './components/search/searchbar'
+import { Providers } from './providers'
 
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,16 +13,16 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html lang="en">
-        <body className={`${inter.className}`}>
-            <CustomProvider store={store}>
-              <AuthProvider>
-                <Navbar />
-                <Search /> 
-                  {/* <CirlclesBackground> */}
-                    {children}
-                  {/* </CirlclesBackground> */}
-              </AuthProvider>
-            </CustomProvider>
+        <body className="">
+          <div className="bg-fixed-gradient">
+            <div className="bg-layer" />
+            <div className="vignette"/>
+          </div>
+          <Providers>
+            <Navbar />
+                  <Search /> 
+                  {children}
+          </Providers>
         </body>
     </html>
   )

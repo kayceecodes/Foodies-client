@@ -1,4 +1,8 @@
 .errorMessage {
     position: absolute;
 }
-    
+.bg-glass {
+    background-color: rgba(130, 130, 130, .15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(240, 240, 240, 0.12);
+}    

@@ -17,6 +17,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import FormikTextField from "./FormikTextField";
+import styles from "./form.module.css";
 
 interface FormValues {
   email: string;
@@ -74,12 +75,7 @@ export default function LoginForm() {
       >
         {(formik) => (
           <div
-            style={{
-              backgroundColor: "rgba(130, 130, 130, .15)",
-              backdropFilter: "blur(20px)",
-              border: "1px solid rgba(240, 240, 240, 0.12)",
-            }}
-            className="mx-6 px-8 py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] w-96 container">
+            className={styles[`bg-glass`] + " mx-6 px-8 py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] w-96 containerz"}>
             <h1 className="text-2xl font-bold mb-6 text-center text-neutral-300">
               Login to Foodies
             </h1>

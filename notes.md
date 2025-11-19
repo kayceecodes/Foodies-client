@@ -48,3 +48,6 @@
 **Nov 11th**
 1. Mui & Formik uses similar form props so it is important to Omit certain props when defining a type that combines the two into on component.
     example: ```ts type FormikTextFieldProps = FieldHookConfig<string> & Omit<TextFieldProps\,'name' | 'value' | 'onChange' | 'onBlur'>;
+
+**Nov 16**
+1. Providers - while using the lastest router to Next.js, App-Router, they needs to be placed in the Root Layout not _app.tsx.
