@@ -65,16 +65,6 @@ export default function LoginForm() {
     password: Yup.string().required("Password is required"),
   });
 
-  const isFormFieldInvalid = (formik: FormikProps<FormValues>, fieldName: string) => {
-      return !!(formik.touched[fieldName as keyof FormValues] && formik.errors[fieldName as keyof FormValues]);
-  }
-
-  const getFormErrorMessage = (formik: FormikProps<FormValues>, fieldName: string) => {
-    return isFormFieldInvalid(formik, fieldName) ? (
-      <small className="p-error">{formik.errors[fieldName as keyof FormValues]}</small>
-    ): null;
-  }
-
   return (
     <AnimatePresence>
       <Formik
@@ -83,7 +73,13 @@ export default function LoginForm() {
         onSubmit={handleSubmit}
       >
         {(formik) => (
-          <div className="mx-6 px-8 py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] w-96 container">
+          <div
+            style={{
+              backgroundColor: "rgba(130, 130, 130, .15)",
+              backdropFilter: "blur(20px)",
+              border: "1px solid rgba(240, 240, 240, 0.12)",
+            }}
+            className="mx-6 px-8 py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] w-96 container">
             <h1 className="text-2xl font-bold mb-6 text-center text-neutral-300">
               Login to Foodies
             </h1>
@@ -101,17 +97,8 @@ export default function LoginForm() {
                   </div>
                 </motion.div>
               )}
-              <FormikTextField name="email" label="Email" variant="outlined" />
-              <div className="mb-6 text-neutral-300">
-                <Field
-                  type="password"
-                  placeholder="Password"
-                  name="password"
-                  disabled={formik.isSubmitting}
-                  className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {getFormErrorMessage(formik, 'password')}
-              </div>
+              <FormikTextField name="email" label="Email" sx={{marginBottom: "30px"}} variant="outlined" />
+              <FormikTextField name="password" label="Password" sx={{marginBottom: "30px"}} variant="outlined" />
               <Button
                 type="submit"
                 color="primary"
@@ -122,14 +109,19 @@ export default function LoginForm() {
                 }}
                 disabled={formik.isSubmitting}>
                   Submit
-                </Button>
+              </Button>
             </Form>
             <div className="text-center text-xs mt-4">
               Don't have an account
-              <Link className="" href="/signup">
-                {" "}<u>sign up</u>{" "}
+              <Link className="font-semibold" href="/signup">
+                {" "}sign up{" "}
               </Link>
               today.
+            </div>
+            <div className="text-center text-xs mt-4 font-semibold">
+              <Link className="font-semibold" href="/reset-password">
+                Forgot password?
+              </Link>
             </div>
           </div>
         )}
