@@ -29,7 +29,7 @@ body {
 :root{
     --bg-rust-1: rgba(185, 90, 45, 0.42);
     --bg-rust-2: rgba(210, 120, 70, 0.28);
-    --bg-olive:   rgba(120, 140, 70, 0.384);
+    --bg-olive:   rgba(70, 140, 136, 0.384);
     --bg-plum:    rgba(80, 55, 70, 0.12);
     --bg-dark:    rgba(18, 13, 10, 0.85);
   }
@@ -63,7 +63,7 @@ body {
 
   radial-gradient(35% 45% at 25% 70%, var(--bg-rust-1) 0%, transparent 55%),
   radial-gradient(40% 50% at 70% 35%, var(--bg-rust-2) 0%, transparent 45%),
-  radial-gradient(35% 25% at 15% 25%, var(--bg-olive) 0%, transparent 45%),
+  radial-gradient(40% 25% at 20% 30%, var(--bg-olive) 0%, transparent 45%),
   radial-gradient(25% 25% at 80% 80%, var(--bg-plum) 0%, transparent 40%),
 
   linear-gradient(180deg, rgba(40,30,25,0.18), var(--bg-dark) 90%);

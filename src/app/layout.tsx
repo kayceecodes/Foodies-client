@@ -20,8 +20,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           </div>
           <Providers>
             <Navbar />
-                  <Search /> 
-                  {children}
+            <Search /> 
+            {children}
           </Providers>
         </body>
     </html>
