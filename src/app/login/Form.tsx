@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage, FormikHelpers, FormikState, FormikProps } from "formik";
+import {
+  Formik,
+  Form,
+  Field,
+  ErrorMessage,
+  FormikHelpers,
+  FormikState,
+  FormikProps,
+} from "formik";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import Loader from "../components/ui/loader/Loader";
@@ -17,7 +25,9 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import FormikTextField from "./FormikTextField";
-import styles from "./form.module.css";
+import { LockOutline, MailLockOutlined, MailOutlined } from "@mui/icons-material";
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import Alert from "@mui/material/Alert";
 
 interface FormValues {
   email: string;
@@ -62,7 +72,9 @@ export default function LoginForm() {
   };
 
   const schema = Yup.object({
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
     password: Yup.string().required("Password is required"),
   });
 
@@ -74,11 +86,12 @@ export default function LoginForm() {
         onSubmit={handleSubmit}
       >
         {(formik) => (
-          <div
-            className={styles[`bg-glass`] + " mx-6 px-8 py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] w-96 containerz"}>
-            <h1 className="text-2xl font-bold mb-6 text-center text-neutral-300">
+          <div className="bg-glass px-8 pt-8 pb-12 text-center rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] w-96 container">
+              <PermIdentityIcon sx={{fontSize: 55, marginBottom: "12px"}} />
+            <h1 className="text-2xl font-bold text-neutral-300">
               Login to Foodies
             </h1>
+            <div className="my-5 text-sm">Welcome back food lovers</div>
             <Form className="flex justify-center flex-col">
               {formik.status?.error && (
                 <motion.div
@@ -88,32 +101,42 @@ export default function LoginForm() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                 >
-                  <div className="text-red-500 text-xs text-center border border-0.9 border-stone-700 rounded-sm max-w-1/3 mx-auto px-2 py-0.5">
+                <Alert className="mb-8" variant="outlined" severity="error">
                     {formik.status?.error}
-                  </div>
+                </Alert>
                 </motion.div>
               )}
-              <FormikTextField name="email" label="Email" sx={{marginBottom: "30px"}} variant="outlined" />
-              <FormikTextField name="password" label="Password" sx={{marginBottom: "30px"}} variant="outlined" />
+              <FormikTextField
+                name="email"
+                label="Email"
+                startIcon={MailOutlined}
+                sx={{ marginBottom: "32px" }}
+                variant="outlined"
+              />
+              <FormikTextField
+                name="password"
+                label="Password"
+                startIcon={LockOutline}
+                sx={{ marginBottom: "32px" }}
+                variant="outlined"
+              />
               <Button
                 type="submit"
                 color="primary"
-                sx={{
-                  border: "0.9px solid #78716caa",
-                  borderRadius: "8px",
-                  color: "#d1d5dc"
-                }}
-                disabled={formik.isSubmitting}>
-                  Submit
+                variant="contained"
+                loading={formik.isSubmitting}
+                disabled={formik.isSubmitting}
+              >
+                Submit
               </Button>
             </Form>
-            <div className="text-center text-xs mt-4">
+            <small className="text-center inline-block mt-4">
               Don't have an account
               <Link className="font-semibold" href="/signup">
                 {" "}sign up{" "}
               </Link>
               today.
-            </div>
+            </small>
             <div className="text-center text-xs mt-4 font-semibold">
               <Link className="font-semibold" href="/reset-password">
                 Forgot password?

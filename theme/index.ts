@@ -5,10 +5,9 @@ const colors = {
   pink: { light: '#d86d95', dark: '#ae4c78'},
   red: { light: '#eb4b2b', dark: '#c73f24'},
   yellow: { light: '#fda026', dark: '#d78821' },
-  rust: { light: '', dark: '#b95a2d6b'},
+  rust: { light: '#d86e3e6b', dark: '#b95a2d6b'},
   charcoal: { light: '#4e4e4e', medium: '#404040', dark: '#333333'},
   neutral: { light: '#525252', medium: '#404040', dark: '#262626'},
-
 }
 
 export const darkTheme = createTheme({
@@ -55,5 +54,28 @@ export const darkTheme = createTheme({
       },
     },
   },
+  MuiButton: {
+    variants: [
+      {
+        props: { variant: 'contained' },  // custom variant
+        style: {
+          border: "0.9px solid #78716caa",
+          borderRadius: "8px",
+          color: "#d1d5dc",
+          background: "linear-gradient(to top,#47bebe 5%, rgb(59, 151, 151) 80%)",
+          transition: "color 0.15s ease-in",
+          '&:hover': {
+            color: "#fff"
+          }
+        }
+      }
+    ],
+    styleOverrides:{
+       root: {
+        '&.<className>': {
+        }
+      }
+    }
+  }
 }
 });

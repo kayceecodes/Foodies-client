@@ -42,43 +42,50 @@ body {
     overflow: hidden;
   }
 
-  /* The giant square that prevents stretching */
-  .bg-fixed-gradient .bg-layer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120vmax;
-    height: 120vmax;
-    transform: translate(-50%, -50%);
-    filter: blur(40px) saturate(1.05);
+/* The giant square that prevents stretching */
+.bg-fixed-gradient .bg-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vmax;
+  height: 120vmax;
+  transform: translate(-50%, -50%);
+  filter: blur(40px) saturate(1.05);
 
-    background-image:
-  /* new center-darkening gradient */
-  radial-gradient(
-    circle at center,
-    rgba(0, 0, 0, 0.35) 0%,
-    rgba(0, 0, 0, 0.55) 60%,
-    transparent 100%
-  ),
+  background-image:
+/* new center-darkening gradient */
+radial-gradient(
+  circle at center,
+  rgba(0, 0, 0, 0.35) 0%,
+  rgba(0, 0, 0, 0.55) 60%,
+  transparent 100%
+),
 
-  radial-gradient(35% 45% at 25% 70%, var(--bg-rust-1) 0%, transparent 55%),
-  radial-gradient(40% 50% at 70% 35%, var(--bg-rust-2) 0%, transparent 45%),
-  radial-gradient(40% 25% at 20% 30%, var(--bg-olive) 0%, transparent 45%),
-  radial-gradient(25% 25% at 80% 80%, var(--bg-plum) 0%, transparent 40%),
+radial-gradient(35% 45% at 25% 70%, var(--bg-rust-1) 0%, transparent 55%),
+radial-gradient(40% 50% at 70% 35%, var(--bg-rust-2) 0%, transparent 45%),
+radial-gradient(40% 25% at 20% 30%, var(--bg-olive) 0%, transparent 45%),
+radial-gradient(25% 25% at 80% 80%, var(--bg-plum) 0%, transparent 40%),
 
-  linear-gradient(180deg, rgba(40,30,25,0.18), var(--bg-dark) 90%);
-    background-blend-mode: screen, screen, screen, screen, normal;
-  }
+linear-gradient(180deg, rgba(40,30,25,0.18), var(--bg-dark) 90%);
+  background-blend-mode: screen, screen, screen, screen, normal;
+}
 
-  .bg-fixed-gradient .vignette {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(0,0,0,0) 50%,
-      rgba(0,0,0,0.32) 75%,
-      rgba(0,0,0,0.62) 100%
-    );
-    mix-blend-mode: multiply;
-  }
+.bg-fixed-gradient .vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0,0,0,0) 50%,
+    rgba(0,0,0,0.32) 75%,
+    rgba(0,0,0,0.62) 100%
+  );
+  mix-blend-mode: multiply;
+}
+
+.bg-glass {
+  background-color: rgba(80, 80, 80, .20);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(240, 240, 240, 0.12);
+}    

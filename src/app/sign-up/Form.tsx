@@ -7,6 +7,10 @@ import Loader from "../components/ui/loader/Loader";
 import ValidationSchema from "./validationSchema";
 import { SignupRequest } from "../../../types/auth";
 import { useAuth } from "../../hooks/useAuth";
+import FormikTextField from "../login/FormikTextField";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import { FormControlLabel } from "@mui/material";
 
 export default function SignupForm() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -66,7 +70,7 @@ export default function SignupForm() {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="mx-6 px-6 py-10 md:px-8 md:py-12 rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] container max-w-screen-sm">
+    <div className="mx-6 px-12 py-12 md:px-16 bg-glass rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] container max-w-lg lg:max-w-xl">
       <h1 className="text-2xl font-bold mb-6 text-center">
         Sign up with Foodies
       </h1>
@@ -75,164 +79,95 @@ export default function SignupForm() {
         validationSchema={ValidationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting, status }) => (
+        {(formik) => (
           <Form className="flex justify-center flex-col">
-            {status && (
+            {formik.status && (
               <div className="bg-red-50 border border-red-200 text-red-600 px-3 py-2 rounded mb-3">
-                {status}
+                {formik.status}
               </div>
             )}
 
             {/* Add missing firstName field */}
-            <div className="grid grid-cols-2 gap-3 mb-3">
-                <div>
-                    <label htmlFor="firstName" className="w-full">First Name</label>
-                    <Field
-                    type="text"
-                    name="firstName"
-                    id="firstName"
-                    disabled={isSubmitting} 
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="firstName"
-                    component="div"
-                    />
-                </div>
-                
-                <div>
-                    <label htmlFor="lastName" className="w-full">Last Name</label>
-                    <Field
-                    type="text"
-                    name="lastName"
-                    id="lastName"
-                    disabled={isSubmitting} 
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="lastName"
-                    component="div"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="username" className="w-full">Username</label>
-                    <Field
-                    type="text"
-                    name="username"
-                    id="username"
-                    disabled={isSubmitting} 
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="username"
-                    component="div"
-                    />
-                </div>
-                
-                <div>
-                    <label htmlFor="email" className="w-full">Email</label>
-                    <Field
-                    type="email"
-                    name="email"
-                    id="email"
-                    disabled={isSubmitting} 
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                    <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="email"
-                    component="div"
-                    />
-                </div>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="password">Password</label>
-              <Field
-                type="password"
-                name="password"
-                id="password" 
-                className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <div className="grid grid-cols-2 gap-y-2 gap-x-10 mb-3">
+              <FormikTextField
+                name="firstName"
+                label="First Name"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
               />
-              <ErrorMessage
-                className="text-red-600 text-sm"
-                name="password"
-                component="div"
+
+              <FormikTextField
+                name="lastName"
+                label="Last Name"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
               />
-            </div>
-            
-            <div className="grid grid-cols-2 gap-3 mb-3">
-                <div className="mb-3">
-                <label htmlFor="streetAddress">Street Address</label>
-                <Field
-                    type="text"
-                    name="streetAddress"
-                    id="streetAdress"
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="streetAddress"
-                    component="div"
-                />
-                </div>
 
-                {/* Add missing city field */}
-                <div className="mb-3">
-                <label htmlFor="city">City</label>
-                <Field
-                    type="text"
-                    name="city"
-                    id="city"
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="city"
-                    component="div"
-                />
-                </div>
+              <FormikTextField
+                name="username"
+                label="User Name"
+                className="col-span-2"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
+              />
 
-                <div className="mb-3">
-                <label htmlFor="state">State</label>
-                <Field
-                    type="text"
-                    name="state"
-                    id="state"
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="state"
-                    component="div"
-                />
-                </div>
+              <FormikTextField
+                name="email"
+                label="Email"
+                className="col-span-2"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
+              />
 
-                <div className="mb-3">
-                <label htmlFor="zipcode">Zipcode</label>
-                <Field
-                    type="text"
-                    name="zipcode"
-                    id="zipcode"
-                    className="w-full px-3 py-2 text-gray-300 border bg-neutral-700 border-stone-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <ErrorMessage
-                    className="text-red-600 text-sm"
-                    name="zipcode"
-                    component="div"
-                />
-                </div>
-            </div>
-            <button
-              type="submit"
-              className="border-stone-700 rounded border-[0.9px] py-2 my-4 disabled:opacity-50"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </button>
+              <FormikTextField
+                name="password"
+                label="Password"
+                className="col-span-2"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
+              />
+
+              <FormikTextField
+                name="streetAddress"
+                label="Street Address"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
+              />
+
+              <FormikTextField
+                name="city"
+                label="City"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
+              />
+
+              <FormikTextField
+                name="state"
+                label="State"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
+              />
+
+              <FormikTextField
+                name="zipcode"
+                label="Zipcode"
+                sx={{ marginBottom: "16px" }}
+                variant="standard"
+              />
+
+           </div>
+           <div>
+           <FormControlLabel className="mb-6" disabled={formik.isSubmitting} control={<Checkbox />} label="Remember Me" /> 
+           </div>
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                className="my-6"
+                loading={formik.isSubmitting}
+                disabled={formik.isSubmitting}>
+                  Submit
+              </Button>
           </Form>
         )}
       </Formik>
