@@ -11,6 +11,7 @@ import FormikTextField from "../login/FormikTextField";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { FormControlLabel } from "@mui/material";
+import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 
 export default function SignupForm() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -70,7 +71,8 @@ export default function SignupForm() {
   return isLoading ? (
     <Loader />
   ) : (
-    <div className="mx-6 px-12 py-12 md:px-16 bg-glass rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] container max-w-lg lg:max-w-xl">
+    <div className="mx-6 px-12 py-12 md:px-16 text-center bg-glass rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] container max-w-lg lg:max-w-xl">
+      <PermIdentityIcon sx={{ fontSize: 55, marginBottom: "12px" }} />
       <h1 className="text-2xl font-bold mb-6 text-center">
         Sign up with Foodies
       </h1>
@@ -154,20 +156,25 @@ export default function SignupForm() {
                 sx={{ marginBottom: "16px" }}
                 variant="standard"
               />
-
-           </div>
-           <div>
-           <FormControlLabel className="mb-6" disabled={formik.isSubmitting} control={<Checkbox />} label="Remember Me" /> 
-           </div>
-              <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                className="my-6"
-                loading={formik.isSubmitting}
-                disabled={formik.isSubmitting}>
-                  Submit
-              </Button>
+            </div>
+            <div className="text-left">
+              <FormControlLabel
+                className="mb-6"
+                disabled={formik.isSubmitting}
+                control={<Checkbox />}
+                label="Remember Me"
+              />
+            </div>
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              className="my-6"
+              loading={formik.isSubmitting}
+              disabled={formik.isSubmitting}
+            >
+              Submit
+            </Button>
           </Form>
         )}
       </Formik>
