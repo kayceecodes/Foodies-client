@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import { FormControlLabel } from "@mui/material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
+import Link from "next/link";
 
 export default function SignupForm() {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -124,6 +125,7 @@ export default function SignupForm() {
               <FormikTextField
                 name="password"
                 label="Password"
+                type="password"
                 className="col-span-2"
                 sx={{ marginBottom: "16px" }}
                 variant="standard"
@@ -157,14 +159,6 @@ export default function SignupForm() {
                 variant="standard"
               />
             </div>
-            <div className="text-left">
-              <FormControlLabel
-                className="mb-6"
-                disabled={formik.isSubmitting}
-                control={<Checkbox />}
-                label="Remember Me"
-              />
-            </div>
             <Button
               type="submit"
               color="primary"
@@ -180,9 +174,13 @@ export default function SignupForm() {
       </Formik>
 
       <div className="text-center text-xs mt-4">
-        Already a user? <u className="cursor-pointer">log in</u> to your
-        account.
+        Already a user? {" "}
+        <strong className="cursor-pointer">
+          <Link href="/login">log into</Link>
+        </strong>
+        {" "}your account.
       </div>
+
     </div>
   );
 }

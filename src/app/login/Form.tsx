@@ -116,6 +116,7 @@ export default function LoginForm() {
               <FormikTextField
                 name="password"
                 label="Password"
+                type="password"
                 startIcon={LockOutline}
                 sx={{ marginBottom: "32px" }}
                 variant="outlined"

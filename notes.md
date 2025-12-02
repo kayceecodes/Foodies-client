@@ -51,3 +51,7 @@
 
 **Nov 16**
 1. Providers - while using the lastest router to Next.js, App-Router, they needs to be placed in the Root Layout not _app.tsx.
+**Nov 21**
+1. Once you deconstruct properties from an object you are extracting(removing) it from the object.
+2. Related to note #1 you can rename props while deconstructing
+for example 
