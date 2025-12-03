@@ -76,8 +76,8 @@ export default function Navbar () {
         : null; 
     
     return (
-        // <nav className="flex w-full justify-between bg-glass border-b-stone-700 border-b-[0.9px] bg-neutral-800 py-2">
-        <nav className="flex w-full justify-between border-b-stone-700 border-b-[0.9px] bg-neutral-800 py-2">
+        <nav className="flex w-full justify-between bg-glass border-b-stone-700 border-b-[0.9px] bg-neutral-800 py-2">
+        {/* <nav className="flex w-full justify-between py-2"> */}
             <div className="flex-1">
 
             </div>

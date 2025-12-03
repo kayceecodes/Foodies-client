@@ -167,7 +167,7 @@ export default function SignupForm() {
               loading={formik.isSubmitting}
               disabled={formik.isSubmitting}
             >
-              Submit
+              <strong>Submit</strong>
             </Button>
           </Form>
         )}

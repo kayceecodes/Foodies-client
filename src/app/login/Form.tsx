@@ -128,7 +128,7 @@ export default function LoginForm() {
                 loading={formik.isSubmitting}
                 disabled={formik.isSubmitting}
               >
-                Submit
+                <strong>Submit</strong>
               </Button>
             </Form>
             <small className="text-center inline-block mt-4">
