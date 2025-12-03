@@ -1,5 +1,4 @@
 import React from "react";
-import CirlclesBackground from "../components/ui/CirclesBackground";
 
 export default function layout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,11 +6,9 @@ export default function layout({ children }: { children: React.ReactNode }) {
     <header>
       <title>Login | Foodies</title>
     </header>
-      {/* <CirlclesBackground> */}
         <main>
           {children}
         </main>
-      {/* </CirlclesBackground> */}
     </>
   );
 }
