@@ -59,11 +59,11 @@ export default function LoginForm() {
         router.push("/");
         return;
       }
-      setStatus({ error: response.message || "Invalid credentials!" });
+      setStatus({ error: response.message || "Could not log in user" });
     } catch (error: unknown) {
       const message =
         error instanceof Error ? error.message : "An unexpected error occurred";
-      setStatus({ error: message });
+      console.log(message);
     } finally {
       if (!response?.success)
         // prevent state update after navigation

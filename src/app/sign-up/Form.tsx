@@ -57,11 +57,12 @@ export default function SignupForm() {
       if (response.success) {
         console.log("Signup successful, redirecting...");
         router.push("/");
+        return;
       }
+      setStatus({error: response.message || "Could not sign up user"})
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error("Signup error:", error.message);
-        setStatus(error.message || "Sign up failed!");
+        setStatus(error.message || "An unexpected error ocurred");
       }
     } finally {
       setLoading(false);
@@ -69,9 +70,7 @@ export default function SignupForm() {
     }
   };
 
-  return isLoading ? (
-    <Loader />
-  ) : (
+  return (
     <div className="mx-6 px-12 py-12 md:px-16 text-center bg-glass rounded-lg border-stone-700 bg-neutral-800 border-[0.9px] container max-w-lg lg:max-w-xl">
       <PermIdentityIcon sx={{ fontSize: 55, marginBottom: "12px" }} />
       <h1 className="text-2xl font-bold mb-6 text-center">
