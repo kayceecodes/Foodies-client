@@ -1,31 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
 import {
   Formik,
   Form,
-  Field,
-  ErrorMessage,
   FormikHelpers,
-  FormikState,
-  FormikProps,
 } from "formik";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
-import Loader from "../components/ui/loader/Loader";
 import {
-  AuthError,
   AuthSuccessResponse,
   LoginRequest,
-  LoginResponse,
 } from "../../../types/auth";
-import { ApiResult } from "../../../types/api";
 import { useAuth } from "../../hooks/useAuth";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import Button from "@mui/material/Button";
 import FormikTextField from "./FormikTextField";
-import { LockOutline, MailLockOutlined, MailOutlined } from "@mui/icons-material";
+import { LockOutline, MailOutlined } from "@mui/icons-material";
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import Alert from "@mui/material/Alert";
 

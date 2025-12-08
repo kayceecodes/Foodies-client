@@ -10,7 +10,7 @@ import { useAuth } from "../../hooks/useAuth";
 import FormikTextField from "../login/FormikTextField";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import { FormControlLabel } from "@mui/material";
+import { Alert, FormControlLabel } from "@mui/material";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import Link from "next/link";
 
@@ -84,9 +84,9 @@ export default function SignupForm() {
         {(formik) => (
           <Form className="flex justify-center flex-col">
             {formik.status && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-3 py-2 rounded mb-3">
-                {formik.status}
-              </div>
+              <Alert className="mb-8" variant="outlined" severity="error">
+                  {formik.status?.error}
+              </Alert>
             )}
 
             {/* Add missing firstName field */}
