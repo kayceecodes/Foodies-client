@@ -72,7 +72,7 @@ export default function LoginForm() {
   return (
     <AnimatePresence>
       <Formik
-        initialValues={{ email: "Hiddle@gmail.com", password: "somepw" }} // loginCredentials would be used here
+        initialValues={{ email: "tHiddle@gmail.com", password: "somepw" }} // loginCredentials would be used here
         validationSchema={schema}
         onSubmit={handleSubmit}
       >

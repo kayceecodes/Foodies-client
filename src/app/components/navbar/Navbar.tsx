@@ -11,19 +11,19 @@ import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 export default function Navbar () {
     const pathname = usePathname();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const {logout, user} = useAuth();
+    const {logout} = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const dropdownRef = useRef<HTMLDivElement>(null); 
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            const isAuth = await checkAuthentication();
-            setIsLoggedIn(isAuth);
-            console.log("User is logged in: ", isAuth);
-        }
-        checkAuth();
-    }
-        ,[user]);
+    // useEffect(() => {
+    //     const checkAuth = async () => {
+    //         const isAuth = await checkAuthStatus();
+    //         setIsLoggedIn(isAuth);
+    //         console.log("User is logged in: ", isAuth);
+    //     }
+    //     checkAuth();
+    // }
+    //     ,[user]);
     
      // Click outside functionality
     useEffect(() => {
@@ -49,7 +49,7 @@ export default function Navbar () {
             </Link>
             <Link className="py-2 text-sm" onClick={() => { 
                 logout();
-                setIsLoggedIn(false);
+                // setIsLoggedIn(false); -- Commented to try isAuthenticated and seeing if logout() also changes isAuthenticated to false
             }} 
             href="/"> <div>Logout</div> 
             </Link>
@@ -63,6 +63,7 @@ export default function Navbar () {
 
     const accountLinksList = 
         isLoggedIn ?  
+        // isAuthenticated ?
         <div 
         className="relative flex-0 mr-2 z-1 md:mr-3 cursor-pointer"
             onClick={toggleDropdownOpen}

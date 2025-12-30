@@ -1,3 +1,5 @@
+import { QueryObserverRefetchErrorResult } from "@tanstack/react-query"
+
 export class AuthError extends Error {
     readonly statusCode: number
 
@@ -11,7 +13,6 @@ export class AuthError extends Error {
 export interface LoginResponse {
   username: string,
   firstname: string,
-  lastname: string,
   zipcode: string
 }
 
@@ -54,7 +55,6 @@ export interface AuthContextType {
   login: (request: LoginRequest) => Promise<AuthSuccessResponse>,
   logout: () => Promise<void>,
   signup: (request: SignupRequest) => Promise<AuthSuccessResponse>,
-  checkAuthStatus: () => Promise<void>,
   isAuthenticated: boolean,
 }
 
@@ -63,14 +63,3 @@ export interface AuthSuccessResponse {
     message: string,
 }
 
-export interface User {
-  id: string,
-  firstName: string,
-  lastName: string,
-  username: string,
-  email: string,
-  streetAddress: string,
-  city: string,
-  state: string,
-  zipcode: string,
-}

@@ -1,15 +1,18 @@
 'use client'
-import React, { 
-  useState, 
-  useEffect, 
-  createContext, 
-  useContext, 
+import React, {
+  createContext,
+  useContext,
   ReactNode,
-  useCallback, 
   JSX
 } from 'react';
 import { User, AuthContextType, LoginRequest, SignupRequest, AuthSuccessResponse } from '../../types/auth';
-import * as authService from '../../utils/auth';
+import {
+  useCurrentUserQuery,
+  useLoginMutation,
+  useSignupMutation,
+  useLogoutMutation,
+} from './useAuthQueries';
+import { QueryObserverRefetchErrorResult } from '@tanstack/react-query';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -18,73 +21,34 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({children}: AuthProviderProps): JSX.Element {
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+    // Explicitly type the query result
+    const { data: user, isLoading: loading, } = useCurrentUserQuery();
+    const { mutateAsync: loginMutate } = useLoginMutation();
+    const { mutateAsync: signupMutate } = useSignupMutation();
+    const { mutateAsync: logoutMutate } = useLogoutMutation();
 
-    const checkAuthStatus = useCallback(async (): Promise<void> => {
-        try {
-            const user = await authService.getCurrentUser();
-            setUser(user);
-        }
-        catch(error) {
-            console.log('Auth check error: ', error);
-            setUser(null);
-        } finally {
-            setLoading(false);
-        }
-    }, [])
+    const login = async (loginRequest: LoginRequest): Promise<AuthSuccessResponse> => {
+        return await loginMutate(loginRequest);
+    };
 
-    const login = useCallback(async ({email, password}: LoginRequest): Promise<AuthSuccessResponse> => {
-        try {
-            const result = await authService.loginUser({email, password} as LoginRequest)
+    const signup = async (signupRequest: SignupRequest): Promise<AuthSuccessResponse> => {
+        return await signupMutate(signupRequest);
+    };
 
-            if (result.success) {
-                await checkAuthStatus();
-            }
-            return result;
-        } catch(error) {
-            throw(error);
-        }
-    }, [checkAuthStatus]);
+    const logout = async (): Promise<void> => {
+        await logoutMutate();
+    };
 
-    const signup = useCallback(async (signupRequest: SignupRequest) => {
-        try {
-            const result = await authService.signupUser(signupRequest);
-            if (result.success) {
-                await checkAuthStatus();
-            }
-
-            return result;
-        }
-        catch(error) {
-            throw error;
-        }
-    },[]);
-
-    const logout = useCallback(async () => {
-        try {
-            const result = await authService.logoutUser();
-            setUser(null);
-            console.log("Called useAuth logout");
-            console.log("User object: ", user);
-        } catch(error) {
-            console.log('Log out error: ', error);
-            setUser(null);
-        }
-    },[]);
-
-    useEffect(() => {
-        checkAuthStatus();
-    }, [checkAuthStatus]);
+    // const checkAuthStatus = async () => {
+    // };
 
     const value: AuthContextType = {
-        user,
+        user: user ?? null, // ensure user is never undefined
         loading,
         login,
         signup,
         logout,
-        checkAuthStatus,
-        isAuthenticated: user !== null,
+        isAuthenticated: !!user, // explicitly check if user exists
     }
 
     return (
@@ -99,6 +63,6 @@ export const useAuth = (): AuthContextType => {
     if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider');
     }
-    
+
     return context;
-} 
+}
