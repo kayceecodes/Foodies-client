@@ -55,3 +55,26 @@
 1. Once you deconstruct properties from an object you are extracting(removing) it from the object.
 2. Related to note #1 you can rename props while deconstructing
 for example 
+
+
+
+utils/fetchApi
+  fetchApi, get.. etc
+
+utils/auth.ts
+  loginUser -> fetchApi
+
+
+hooks/useAuthQueries
+  getCurrentUser
+  useLoginMutation -> loginUser
+  useLogoutMutation
+  useSignupMuttion
+
+hooks/useAuth
+  user 
+  loading,
+  login() -> useLoginMutate,
+  signup(),
+  logout(),
+  isAuthenticated
