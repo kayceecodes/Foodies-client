@@ -58,23 +58,29 @@ for example
 
 
 
-utils/fetchApi
+## Questions
+1. Is it common to consider if the backend doesn't return a proper JSON body/response, a response that wouldn't allow response.JSON() to be called without an error?
+
+
+## Listing of calls and state
+
+- **utils/fetchApi**  
   fetchApi, get.. etc
 
-utils/auth.ts
+- **utils/auth.ts**  
   loginUser -> fetchApi
 
 
-hooks/useAuthQueries
+- **hooks/useAuthQueries**  
   getCurrentUser
   useLoginMutation -> loginUser
   useLogoutMutation
   useSignupMuttion
 
-hooks/useAuth
-  user 
-  loading,
-  login() -> useLoginMutate,
-  signup(),
-  logout(),
-  isAuthenticated
+- **hooks/useAuth**  
+  user,     
+  loading,  
+  login() -> useLoginMutate,  
+  signup(),  
+  logout(),  
+  isAuthenticated  

@@ -61,5 +61,6 @@ export interface AuthContextType {
 export interface AuthSuccessResponse {
     success: boolean,
     message: string,
+    data?: LoginResponse | SignupResponse 
 }
 

@@ -11,7 +11,7 @@ import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 export default function Navbar () {
     const pathname = usePathname();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const {logout} = useAuth();
+    const {logout, isAuthenticated} = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const dropdownRef = useRef<HTMLDivElement>(null); 
 
@@ -62,8 +62,8 @@ export default function Navbar () {
         setIsDropdownOpen(prev => !prev)
 
     const accountLinksList = 
-        isLoggedIn ?  
-        // isAuthenticated ?
+        // isLoggedIn ?  
+        isAuthenticated ?
         <div 
         className="relative flex-0 mr-2 z-1 md:mr-3 cursor-pointer"
             onClick={toggleDropdownOpen}
@@ -87,7 +87,8 @@ export default function Navbar () {
                     <i className="fa-solid fa-magnifying-glass"></i>
                     <FontAwesomeIcon icon={faSearch} />
                 </Link>  */}
-                {isLoggedIn ? null :
+                {/* {isLoggedIn ? null : */}
+                {isAuthenticated ? null :
                     <Link className="grow-0 w-fit pt-0.5 mr-5 text-md" href="/login">
                         Login
                     </Link>}
