@@ -11,33 +11,24 @@ import { faSearch, faUser } from '@fortawesome/free-solid-svg-icons';
 export default function Navbar () {
     const pathname = usePathname();
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const {logout, isAuthenticated} = useAuth();
+    const {logout, user, isAuthenticated} = useAuth();
     const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
     const dropdownRef = useRef<HTMLDivElement>(null); 
+   
+    useEffect(() => {
+        setIsLoggedIn(isAuthenticated);
+    }, [isAuthenticated])
 
-    // useEffect(() => {
-    //     const checkAuth = async () => {
-    //         const isAuth = await checkAuthStatus();
-    //         setIsLoggedIn(isAuth);
-    //         console.log("User is logged in: ", isAuth);
-    //     }
-    //     checkAuth();
-    // }
-    //     ,[user]);
-    
-     // Click outside functionality
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node))
                 setIsDropdownOpen(false);
         };
 
-        // Add event listener when dropdown is open
         if (isDropdownOpen)
             document.addEventListener('mousedown', handleClickOutside);
 
-        // Cleanup event listener
-        return () => {
+        return () => {// Cleanup event listener
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [isDropdownOpen]);
@@ -49,7 +40,6 @@ export default function Navbar () {
             </Link>
             <Link className="py-2 text-sm" onClick={() => { 
                 logout();
-                // setIsLoggedIn(false); -- Commented to try isAuthenticated and seeing if logout() also changes isAuthenticated to false
             }} 
             href="/"> <div>Logout</div> 
             </Link>
@@ -62,8 +52,7 @@ export default function Navbar () {
         setIsDropdownOpen(prev => !prev)
 
     const accountLinksList = 
-        // isLoggedIn ?  
-        isAuthenticated ?
+        isLoggedIn ?  
         <div 
         className="relative flex-0 mr-2 z-1 md:mr-3 cursor-pointer"
             onClick={toggleDropdownOpen}
@@ -78,7 +67,6 @@ export default function Navbar () {
     
     return (
         <nav className="flex w-full justify-between bg-glass border-b-stone-700 border-b-[0.9px] bg-neutral-800 py-2">
-        {/* <nav className="flex w-full justify-between py-2"> */}
             <div className="flex-1">
 
             </div>
@@ -87,8 +75,7 @@ export default function Navbar () {
                     <i className="fa-solid fa-magnifying-glass"></i>
                     <FontAwesomeIcon icon={faSearch} />
                 </Link>  */}
-                {/* {isLoggedIn ? null : */}
-                {isAuthenticated ? null :
+                {isLoggedIn ? null :
                     <Link className="grow-0 w-fit pt-0.5 mr-5 text-md" href="/login">
                         Login
                     </Link>}

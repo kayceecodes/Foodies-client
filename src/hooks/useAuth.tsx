@@ -39,9 +39,6 @@ export function AuthProvider({children}: AuthProviderProps): JSX.Element {
         await logoutMutate();
     };
 
-    // const checkAuthStatus = async () => {
-    // };
-
     const value: AuthContextType = {
         user: user ?? null, // ensure user is never undefined
         loading,
